@@ -1,4 +1,4 @@
-package com.example.SpringProject.Employee;
+package com.example.ProjectPulse.Employee;
 import jakarta.persistence.Entity; // CORRECT
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

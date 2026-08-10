@@ -1,4 +1,4 @@
-package com.example.SpringProject.Employee;
+package com.example.ProjectPulse.Employee;
 
 
 

@@ -1,12 +1,12 @@
-package com.example.SpringProject.Project;
+package com.example.ProjectPulse.Project;
 
-import com.example.SpringProject.Employee.Employee;
-import com.example.SpringProject.Employee.EmployeeResponseDto;
-import com.example.SpringProject.Employee.EmployeeService;
-import com.example.SpringProject.Task.Task;
-import com.example.SpringProject.Task.TaskResponseDto;
-import com.example.SpringProject.Task.TaskService;
-import com.example.SpringProject.Task.TaskStatus;
+import com.example.ProjectPulse.Employee.Employee;
+import com.example.ProjectPulse.Employee.EmployeeResponseDto;
+import com.example.ProjectPulse.Employee.EmployeeService;
+import com.example.ProjectPulse.Task.Task;
+import com.example.ProjectPulse.Task.TaskResponseDto;
+import com.example.ProjectPulse.Task.TaskService;
+import com.example.ProjectPulse.Task.TaskStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

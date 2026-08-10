@@ -1,11 +1,9 @@
-package com.example.SpringProject.Task;
+package com.example.ProjectPulse.Task;
 
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.locks.ReentrantLock;
 
 @RestController
 @RequestMapping("/task")

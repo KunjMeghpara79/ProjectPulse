@@ -1,7 +1,7 @@
-package com.example.SpringProject.Task;
+package com.example.ProjectPulse.Task;
 
-import com.example.SpringProject.Employee.EmployeeRepo;
-import com.example.SpringProject.Project.ProjectRepo;
+import com.example.ProjectPulse.Employee.EmployeeRepo;
+import com.example.ProjectPulse.Project.ProjectRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

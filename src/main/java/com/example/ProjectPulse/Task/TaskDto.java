@@ -1,6 +1,4 @@
-package com.example.SpringProject.Task;
-
-import jdk.jfr.DataAmount;
+package com.example.ProjectPulse.Task;
 
 public class TaskDto {
     private String taskDetails;

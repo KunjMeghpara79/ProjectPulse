@@ -1,4 +1,4 @@
-package com.example.SpringProject.Task;
+package com.example.ProjectPulse.Task;
 
 public enum TaskStatus {
     COMPLETED,

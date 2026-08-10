@@ -1,7 +1,7 @@
-package com.example.SpringProject.Project;
+package com.example.ProjectPulse.Project;
 
-import com.example.SpringProject.Employee.Employee;
-import com.example.SpringProject.Task.Task;
+import com.example.ProjectPulse.Employee.Employee;
+import com.example.ProjectPulse.Task.Task;
 import jakarta.persistence.*;
 
 

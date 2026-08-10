@@ -1,4 +1,4 @@
-package com.example.SpringProject;
+package com.example.ProjectPulse;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

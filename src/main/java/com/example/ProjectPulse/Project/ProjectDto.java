@@ -1,4 +1,4 @@
-package com.example.SpringProject.Project;
+package com.example.ProjectPulse.Project;
 
 
 public class ProjectDto {
