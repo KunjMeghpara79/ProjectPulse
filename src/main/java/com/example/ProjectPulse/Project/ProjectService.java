@@ -89,8 +89,6 @@ public class ProjectService {
         return new ProjectResponseDto(project.getProjectId(),project.getProjectName(),employees,tasks);
     }
 
-
-
     public Project updateProject(int id,String name){
         Project project = projectRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         project.setProjectName(name);
