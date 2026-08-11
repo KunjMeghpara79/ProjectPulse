@@ -19,42 +19,35 @@ public class Task {
     private String taskDetails;
     private TaskStatus taskStatus;
     private int projectId;
+    private int employeeId;
+
+
 
     public int getEmployeeId() {
         return employeeId;
     }
-
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
-
-    private int employeeId;
-
     public TaskStatus getTaskStatus() {
         return taskStatus;
     }
-
     public void setTaskStatus(TaskStatus taskStatus) {
         this.taskStatus = taskStatus;
     }
-
     public String getTaskDetails() {
         return taskDetails;
     }
-
     public void setTaskDetails(String taskDetails) {
         this.taskDetails = taskDetails;
     }
-
-
     public int getProjectId() {
         return projectId;
     }
-
-
-
-    public Task(int projectId,int employeeId) {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
-        this.employeeId = employeeId;
     }
+
+
+
 }

@@ -1,7 +1,9 @@
 package com.example.ProjectPulse.Task;
 
 import com.example.ProjectPulse.Employee.EmployeeRepo;
+import com.example.ProjectPulse.Project.Project;
 import com.example.ProjectPulse.Project.ProjectRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,16 +34,19 @@ public class TaskService {
         return true;
     }
 
+
+    @Transactional
     public TaskResponseDto createTask(TaskDto taskDto){
-        boolean employeeExists = employeeRepo.existsById(taskDto.getEmployeeId());
-        boolean projectExists = projectRepo.existsById(taskDto.getProjectId());
-        if(!employeeExists || !projectExists) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        Task task = new Task(taskDto.getProjectId(),taskDto.getEmployeeId());
-        task.setTaskDetails(taskDto.getTaskDetails());
+        boolean employeeExists = employeeRepo.existsById(taskDto.employeeId());
+        boolean projectExists = projectRepo.existsById(taskDto.projectId());
+        if (!employeeExists || !projectExists) throw new ResponseStatusException(HttpStatus.CONFLICT);
+        Task task = new Task();
+        task.setEmployeeId(taskDto.employeeId());
+        task.setProjectId(taskDto.projectId());
+        task.setTaskDetails(taskDto.taskDetails());
         task.setTaskStatus(TaskStatus.PENDING);
         taskRepo.save(task);
-        return new TaskResponseDto(task.getTaskId(),task.getTaskDetails(),task.getTaskStatus(),task.getProjectId(),task.getEmployeeId());
+        projectRepo.findById(task.getProjectId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getTasks().add(task);
+        return new TaskResponseDto(task.getTaskId(),task.getTaskDetails(),task.getTaskStatus(),task.getEmployeeId(),task.getProjectId());
     }
 }

@@ -19,5 +19,4 @@ public class TaskController {
         TaskResponseDto task = taskService.createTask(taskDto);
         return new ResponseEntity<>(task, HttpStatus.CREATED);
     }
-
 }

@@ -18,8 +18,8 @@ public class ProjectController {
     @PostMapping
     public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectDto projectDto){
         try {
-            ProjectResponseDto project = projectService.createProject(projectDto);
-            return new ResponseEntity<>(project, HttpStatus.CREATED);
+            ProjectResponseDto projectResponseDto = projectService.createProject(projectDto);
+            return new ResponseEntity<>(projectResponseDto, HttpStatus.CREATED);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
@@ -27,13 +27,19 @@ public class ProjectController {
 
     @GetMapping("/{projectId}")
     public ResponseEntity<ProjectResponseDto> getProjectById(@PathVariable int projectId)  {
-        ProjectResponseDto project = projectService.findProjectById(projectId);
-        return new ResponseEntity<>(project,HttpStatus.OK);
+        ProjectResponseDto projectResponseDto = projectService.findProjectById(projectId);
+        return new ResponseEntity<>(projectResponseDto,HttpStatus.OK);
     }
 
-    @PutMapping("/{projectId}/employees/{employeeId}")
+    @PutMapping("/{projectId}/employee/{employeeId}")
     public ResponseEntity<ProjectResponseDto> addEmployee(@PathVariable int projectId,@PathVariable int employeeId) {
-        ProjectResponseDto project = projectService.addEmployee(projectId,employeeId);
-        return new ResponseEntity<>(project,HttpStatus.OK);
+        ProjectResponseDto projectResponseDto = projectService.addEmployee(projectId,employeeId);
+        return new ResponseEntity<>(projectResponseDto,HttpStatus.OK);
+    }
+
+    @PutMapping("/{projectId}/task/{taskId}")
+    public ResponseEntity<ProjectResponseDto> addTask(@PathVariable int projectId,@PathVariable int taskId){
+        ProjectResponseDto projectResponseDto = projectService.addTask(projectId,taskId);
+        return new ResponseEntity<>(projectResponseDto,HttpStatus.OK);
     }
 }

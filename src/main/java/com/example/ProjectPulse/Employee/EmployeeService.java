@@ -1,5 +1,6 @@
 package com.example.ProjectPulse.Employee;
 
+import com.example.ProjectPulse.Task.TaskRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,15 +10,18 @@ public class EmployeeService {
 
     private final EmployeeRepo employeeRepo;
 
-    public EmployeeService(EmployeeRepo employeeRepo) {
+    private final TaskRepo taskRepo;
+
+    public EmployeeService(EmployeeRepo employeeRepo, TaskRepo taskRepo) {
         this.employeeRepo = employeeRepo;
+        this.taskRepo = taskRepo;
     }
 
 
     public EmployeeResponseDto createEmployee(EmployeeDto employeeDto){
         Employee employee = new Employee();
-        employee.setEmployeeName(employeeDto.getEmployeeName());
-        employee.setEmployeeEmail(employeeDto.getEmployeeEmail());
+        employee.setEmployeeName(employeeDto.employeeName());
+        employee.setEmployeeEmail(employeeDto.employeeEmail());
         employeeRepo.save(employee);
         return new EmployeeResponseDto(employee.getEmployeeId(),employee.getEmployeeName(),employee.getEmployeeEmail());
     }
@@ -34,8 +38,8 @@ public class EmployeeService {
 
     public EmployeeResponseDto updateEmployee(int id, EmployeeDto employeeDto) {
         Employee employee = employeeRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if(employeeDto.getEmployeeName() != null) employee.setEmployeeName(employeeDto.getEmployeeName());
-        if(employeeDto.getEmployeeEmail() != null) employee.setEmployeeEmail(employeeDto.getEmployeeEmail());
+        if(employeeDto.employeeName() != null) employee.setEmployeeName(employeeDto.employeeName());
+        if(employeeDto.employeeEmail() != null) employee.setEmployeeEmail(employeeDto.employeeEmail());
         employeeRepo.save(employee);
         return new EmployeeResponseDto(employee.getEmployeeId(),employee.getEmployeeName(),employee.getEmployeeEmail());
     }
@@ -44,6 +48,7 @@ public class EmployeeService {
         if(!employeeRepo.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        taskRepo.deleteTasks(id);
         employeeRepo.deleteById(id);
         return true;
     }

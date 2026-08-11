@@ -3,10 +3,7 @@ package com.example.ProjectPulse.Project;
 import com.example.ProjectPulse.Employee.Employee;
 import com.example.ProjectPulse.Employee.EmployeeResponseDto;
 import com.example.ProjectPulse.Employee.EmployeeService;
-import com.example.ProjectPulse.Task.Task;
-import com.example.ProjectPulse.Task.TaskResponseDto;
-import com.example.ProjectPulse.Task.TaskService;
-import com.example.ProjectPulse.Task.TaskStatus;
+import com.example.ProjectPulse.Task.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,14 +26,17 @@ It tells the Spring container that the annotated class is responsible for the pe
 public class ProjectService {
     private final TaskService taskService;
 
-    public ProjectService(TaskService taskService, EmployeeService employeeService, ProjectRepo projectRepo) {
+    public ProjectService(TaskService taskService, EmployeeService employeeService, ProjectRepo projectRepo, TaskRepo taskRepo) {
         this.taskService = taskService;
         this.employeeService = employeeService;
         this.projectRepo = projectRepo;
+        this.taskRepo = taskRepo;
     }
     private final EmployeeService employeeService;
 
     private final ProjectRepo projectRepo;
+
+    private final TaskRepo taskRepo;
 
     public boolean addTask(Project p, Task t){
         TaskStatus taskStatus = taskService.checkTaskStatus(t);
@@ -53,7 +53,7 @@ public class ProjectService {
 
     public ProjectResponseDto createProject(ProjectDto projectDto){
         Project project = new Project();
-        project.setProjectName(projectDto.getProjectName());
+        project.setProjectName(projectDto.projectName());
         project.setEmployees(new ArrayList<>());
         project.setTask(new ArrayList<>());
         projectRepo.save(project);
@@ -64,7 +64,6 @@ public class ProjectService {
                 .map(task -> new TaskResponseDto(task.getTaskId(),task.getTaskDetails(),task.getTaskStatus(),task.getProjectId(),task.getEmployeeId()))
                 .toList();
         return new ProjectResponseDto(project.getProjectId(),project.getProjectName(),employees,tasks);
-
     }
 
     public ProjectResponseDto findProjectById(int id) {
@@ -76,7 +75,6 @@ public class ProjectService {
                 .map(task -> new TaskResponseDto(task.getTaskId(),task.getTaskDetails(),task.getTaskStatus(),task.getProjectId(),task.getEmployeeId()))
                 .toList();
         return new ProjectResponseDto(project.getProjectId(),project.getProjectName(),employees,tasks);
-
     }
 
     public ProjectResponseDto addEmployee(int projectId,int employeeId)  {
@@ -91,6 +89,25 @@ public class ProjectService {
                 .map(task -> new TaskResponseDto(task.getTaskId(),task.getTaskDetails(),task.getTaskStatus(),task.getProjectId(),task.getEmployeeId()))
                 .toList();
         return new ProjectResponseDto(project.getProjectId(),project.getProjectName(),employees,tasks);
+    }
+
+    public ProjectResponseDto addTask(int projectId,int taskId){
+        Project project = projectRepo.findById(projectId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Task task = taskRepo.findById(taskId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if(project.getTasks().contains(task)){
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
+        else {
+            project.getTasks().add(task);
+            List<EmployeeResponseDto> employees = project.getEmployees().stream()
+                    .map(emp -> new EmployeeResponseDto(emp.getEmployeeId(),emp.getEmployeeName(),emp.getEmployeeEmail()))
+                    .toList();
+            List<TaskResponseDto> tasks = project.getTasks().stream()
+                    .map(t -> new TaskResponseDto(t.getTaskId(),t.getTaskDetails(),t.getTaskStatus(),t.getProjectId(),t.getEmployeeId()))
+                    .toList();
+            return new ProjectResponseDto(project.getProjectId(),project.getProjectName(),employees,tasks);
+        }
+
     }
 
     public Project updateProject(int id,String name){
