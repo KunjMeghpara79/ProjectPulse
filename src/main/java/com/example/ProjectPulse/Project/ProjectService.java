@@ -36,7 +36,6 @@ public class ProjectService {
         this.taskRepo = taskRepo;
     }
 
-
     public boolean addTask(Project p, Task t){
         TaskStatus taskStatus = taskService.checkTaskStatus(t);
 
@@ -90,24 +89,7 @@ public class ProjectService {
         return new ProjectResponseDto(project.getProjectId(),project.getProjectName(),employees,tasks);
     }
 
-    public ProjectResponseDto addTask(int projectId,int taskId){
-        Project project = projectRepo.findById(projectId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        Task task = taskRepo.findById(taskId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if(project.getTasks().contains(task)){
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        }
-        else {
-            project.getTasks().add(task);
-            List<EmployeeResponseDto> employees = project.getEmployees().stream()
-                    .map(emp -> new EmployeeResponseDto(emp.getEmployeeId(),emp.getEmployeeName(),emp.getEmployeeEmail()))
-                    .toList();
-            List<TaskResponseDto> tasks = project.getTasks().stream()
-                    .map(t -> new TaskResponseDto(t.getTaskId(),t.getTaskDetails(),t.getTaskStatus(),t.getProjectId(),t.getEmployeeId()))
-                    .toList();
-            return new ProjectResponseDto(project.getProjectId(),project.getProjectName(),employees,tasks);
-        }
 
-    }
 
     public Project updateProject(int id,String name){
         Project project = projectRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

@@ -4,6 +4,9 @@ import com.example.ProjectPulse.Employee.EmployeeRepo;
 import com.example.ProjectPulse.Project.Project;
 import com.example.ProjectPulse.Project.ProjectRepo;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -48,5 +51,15 @@ public class TaskService {
         taskRepo.save(task);
         projectRepo.findById(task.getProjectId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getTasks().add(task);
         return new TaskResponseDto(task.getTaskId(),task.getTaskDetails(),task.getTaskStatus(),task.getEmployeeId(),task.getProjectId());
+    }
+
+    public Page<Task> getTasks(int page, int size){
+        Pageable pageable = PageRequest.of(page,size);
+        return taskRepo.findAll(pageable);
+    }
+
+    public void delteTask(int id){
+        Task task = taskRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        taskRepo.deleteById(id);
     }
 }

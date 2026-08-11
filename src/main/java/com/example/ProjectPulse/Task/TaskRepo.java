@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskRepo extends JpaRepository<Task,Integer> {
 
-    @Transactional
-    @Modifying
+    @Transactional //If the query fails halfway through, the database rolls back to its original state.
+    @Modifying /* This instructs Spring Data JPA that the execution will change the database state
+     via an UPDATE, INSERT, or DELETE command instead of a SELECT statement.*/
     @Query("Delete from Task t where t.employeeId = :employeeId")
     void deleteTasks(@Param("employeeId") int employeeId);
 

@@ -37,9 +37,5 @@ public class ProjectController {
         return new ResponseEntity<>(projectResponseDto,HttpStatus.OK);
     }
 
-    @PutMapping("/{projectId}/task/{taskId}")
-    public ResponseEntity<ProjectResponseDto> addTask(@PathVariable int projectId,@PathVariable int taskId){
-        ProjectResponseDto projectResponseDto = projectService.addTask(projectId,taskId);
-        return new ResponseEntity<>(projectResponseDto,HttpStatus.OK);
-    }
+
 }
