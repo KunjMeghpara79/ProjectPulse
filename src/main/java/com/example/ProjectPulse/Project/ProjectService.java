@@ -25,6 +25,9 @@ It tells the Spring container that the annotated class is responsible for the pe
 @Service
 public class ProjectService {
     private final TaskService taskService;
+    private final EmployeeService employeeService;
+    private final ProjectRepo projectRepo;
+    private final TaskRepo taskRepo;
 
     public ProjectService(TaskService taskService, EmployeeService employeeService, ProjectRepo projectRepo, TaskRepo taskRepo) {
         this.taskService = taskService;
@@ -32,11 +35,7 @@ public class ProjectService {
         this.projectRepo = projectRepo;
         this.taskRepo = taskRepo;
     }
-    private final EmployeeService employeeService;
 
-    private final ProjectRepo projectRepo;
-
-    private final TaskRepo taskRepo;
 
     public boolean addTask(Project p, Task t){
         TaskStatus taskStatus = taskService.checkTaskStatus(t);
@@ -51,7 +50,7 @@ public class ProjectService {
         }else return false;
     }
 
-    public ProjectResponseDto createProject(ProjectDto projectDto){
+    public ProjectResponseDto createProject(ProjectDto projectDto) {
         Project project = new Project();
         project.setProjectName(projectDto.projectName());
         project.setEmployees(new ArrayList<>());
