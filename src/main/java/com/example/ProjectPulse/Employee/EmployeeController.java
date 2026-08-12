@@ -1,4 +1,5 @@
 package com.example.ProjectPulse.Employee;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeResponseDto> createEmployee(@RequestBody EmployeeDto employeeDto){
+    public ResponseEntity<EmployeeResponseDto> createEmployee(@Valid @RequestBody EmployeeDto employeeDto){
         EmployeeResponseDto employee = employeeService.createEmployee(employeeDto);
         return new ResponseEntity<>(employee, HttpStatus.CREATED);
     }

@@ -3,6 +3,8 @@ import jakarta.persistence.Entity; // CORRECT
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Employee {
@@ -11,7 +13,11 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int employeeId;
+
+
     private String employeeName;
+
+
     private String employeeEmail;
 
     public String getEmployeeEmail() {
