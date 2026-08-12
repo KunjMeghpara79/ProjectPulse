@@ -28,13 +28,14 @@ public class ProjectService {
     private final EmployeeService employeeService;
     private final ProjectRepo projectRepo;
     private final TaskRepo taskRepo;
-
-
-    public ProjectService(TaskService taskService, EmployeeService employeeService, ProjectRepo projectRepo, TaskRepo taskRepo) {
+    private final ProjectMapper projectMapper;
+    public ProjectService(TaskService taskService, EmployeeService employeeService, ProjectRepo projectRepo, TaskRepo taskRepo, ProjectMapper projectMapper) {
         this.taskService = taskService;
         this.employeeService = employeeService;
         this.projectRepo = projectRepo;
         this.taskRepo = taskRepo;
+
+        this.projectMapper = projectMapper;
     }
 
     public boolean addTask(Project p, Task t){
@@ -51,10 +52,9 @@ public class ProjectService {
     }
 
     public ProjectResponseDto createProject(ProjectRequestDto projectRequestDto) {
-        Project project = new Project();
-        project.setProjectName(projectRequestDto.projectName());
-        project.setEmployees(new ArrayList<>());
-        project.setTask(new ArrayList<>());
+        if (projectRepo.existsByProjectName(projectRequestDto.projectName())){throw new ResponseStatusException(HttpStatus.CONFLICT);}
+
+        Project project = projectMapper.projectRequestDtoToProject(projectRequestDto);
         projectRepo.save(project);
         List<EmployeeResponseDto> employees = project.getEmployees().stream()
                 .map(emp -> new EmployeeResponseDto(emp.getEmployeeId(),emp.getEmployeeName(),emp.getEmployeeEmail()))

@@ -7,22 +7,20 @@ import org.mapstruct.MappingTarget;
 
 import java.util.ArrayList;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ProjectMapper {
-    @Mapping(target = "projectId", ignore = true)
     @Mapping(target = "employees", ignore = true)
     @Mapping(target = "task", ignore = true)
     Project projectRequestDtoToProject(ProjectRequestDto projectRequestDto);
-    ProjectResponseDto projectToProjectResponseDto(Project project);
-
     @AfterMapping
     default void initializeCollections(@MappingTarget Project project){
-        if(project.getEmployees() == null){
-            project.setEmployees(new ArrayList<>());
-        }
-        if(project.getTasks() == null){
-            project.setTask(new ArrayList<>());
-        }
+        if(project.getTasks() == null) project.setTask(new ArrayList<>());
+        if(project.getEmployees() == null) project.setEmployees(new ArrayList<>());
     }
+    ProjectResponseDto projectToProjectResponseDto(Project project);
+
+
+
+
 
 }

@@ -19,10 +19,12 @@ public class TaskService {
 
     private final EmployeeRepo employeeRepo;
     private final ProjectRepo projectRepo;
-    public TaskService(TaskRepo taskRepo, EmployeeRepo employeeRepo, ProjectRepo projectRepo) {
+    private final TaskMapper taskMapper;
+    public TaskService(TaskRepo taskRepo, EmployeeRepo employeeRepo, ProjectRepo projectRepo, TaskMapper taskMapper) {
         this.taskRepo = taskRepo;
         this.employeeRepo = employeeRepo;
         this.projectRepo = projectRepo;
+        this.taskMapper = taskMapper;
     }
 
     public TaskStatus checkTaskStatus(Task t){
@@ -41,14 +43,11 @@ public class TaskService {
         boolean employeeExists = employeeRepo.existsById(taskRequestDto.employeeId());
         boolean projectExists = projectRepo.existsById(taskRequestDto.projectId());
         if (!employeeExists || !projectExists) throw new ResponseStatusException(HttpStatus.CONFLICT);
-        Task task = new Task();
-        task.setEmployeeId(taskRequestDto.employeeId());
-        task.setProjectId(taskRequestDto.projectId());
-        task.setTaskDetails(taskRequestDto.taskDetails());
+        Task task = taskMapper.taskRequestDtoToTask(taskRequestDto);
         task.setTaskStatus(TaskStatus.PENDING);
         taskRepo.save(task);
         projectRepo.findById(task.getProjectId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getTasks().add(task);
-        return new TaskResponseDto(task.getTaskId(),task.getTaskDetails(),task.getTaskStatus(),task.getEmployeeId(),task.getProjectId());
+        return taskMapper.taskToTaskResponseDto(task);
     }
 
     public Page<Task> getTasks(int page, int size){
