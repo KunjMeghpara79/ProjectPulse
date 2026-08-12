@@ -6,16 +6,24 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 public class Employee {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int employeeId;
-
 
     private String employeeName;
 
     @Column(unique = true, nullable = false)
     private String employeeEmail;
+
+
+    public Employee() {
+    }
+    public Employee(String employeeName, int employeeId, String employeeEmail) {
+        this.employeeName = employeeName;
+        this.employeeId = employeeId;
+        this.employeeEmail = employeeEmail;
+    }
+
 
     public String getEmployeeEmail() {
         return this.employeeEmail;
@@ -27,19 +35,11 @@ public class Employee {
         return this.employeeId;
     }
 
-    public Employee() {
-    }
 
-    public Employee(String employeeName, int employeeId, String employeeEmail) {
-        this.employeeName = employeeName;
-        this.employeeId = employeeId;
-        this.employeeEmail = employeeEmail;
-    }
 
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
     }
-
     public void setEmployeeEmail(String employeeEmail) {
         this.employeeEmail = employeeEmail;
     }

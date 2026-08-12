@@ -1,6 +1,7 @@
 package com.example.ProjectPulse.Project;
 
 import com.example.ProjectPulse.Employee.Employee;
+import com.example.ProjectPulse.Employee.EmployeeRepo;
 import com.example.ProjectPulse.Employee.EmployeeResponseDto;
 import com.example.ProjectPulse.Employee.EmployeeService;
 import com.example.ProjectPulse.Task.*;
@@ -10,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /*
 @Component : A class annotated by this annotation will be automatically registered as spring managed bean
@@ -29,13 +31,14 @@ public class ProjectService {
     private final ProjectRepo projectRepo;
     private final TaskRepo taskRepo;
     private final ProjectMapper projectMapper;
-    public ProjectService(TaskService taskService, EmployeeService employeeService, ProjectRepo projectRepo, TaskRepo taskRepo, ProjectMapper projectMapper) {
+    private final EmployeeRepo employeeRepo;
+    public ProjectService(TaskService taskService, EmployeeService employeeService, ProjectRepo projectRepo, TaskRepo taskRepo, ProjectMapper projectMapper, EmployeeRepo employeeRepo) {
         this.taskService = taskService;
         this.employeeService = employeeService;
         this.projectRepo = projectRepo;
         this.taskRepo = taskRepo;
-
         this.projectMapper = projectMapper;
+        this.employeeRepo = employeeRepo;
     }
 
     public boolean addTask(Project p, Task t){
@@ -68,17 +71,11 @@ public class ProjectService {
 
     public ProjectResponseDto addEmployee(int projectId,int employeeId)  {
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        EmployeeResponseDto employee = employeeService.getEmployee(employeeId);
-        project.getEmployees().add(new Employee(employee.employeeName(),employee.employeeId(),employee.employeeEmail()));
+        Employee employee = employeeRepo.findById(employeeId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        project.getEmployees().add(employee);
         projectRepo.save(project);
-
         return projectMapper.projectToProjectResponseDto(project);
     }
 
-    public Project updateProject(int id,String name){
-        Project project = projectRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        project.setProjectName(name);
-        projectRepo.save(project);
-        return project;
-    }
+
 }

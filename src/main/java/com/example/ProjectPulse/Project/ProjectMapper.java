@@ -15,6 +15,7 @@ public interface ProjectMapper {
     @Mapping(target = "employees", ignore = true)
     @Mapping(target = "task", ignore = true)
     Project projectRequestDtoToProject(ProjectRequestDto projectRequestDto);
+
     @AfterMapping
     default void initializeCollections(@MappingTarget Project project){
         if(project.getTasks() == null) project.setTask(new ArrayList<>());
@@ -23,9 +24,4 @@ public interface ProjectMapper {
     /*the above method will run after mapping is done because ProjectRequestDto doesn't contain these two list
     * it will initialize it with empty lists*/
     ProjectResponseDto projectToProjectResponseDto(Project project);
-
-
-
-
-
 }

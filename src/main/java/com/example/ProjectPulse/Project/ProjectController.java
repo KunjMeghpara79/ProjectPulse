@@ -36,6 +36,4 @@ public class ProjectController {
         ProjectResponseDto projectResponseDto = projectService.addEmployee(projectId,employeeId);
         return new ResponseEntity<>(projectResponseDto,HttpStatus.OK);
     }
-
-
 }
