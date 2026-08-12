@@ -1,10 +1,9 @@
 package com.example.ProjectPulse.Task;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-public record TaskDto(
+public record TaskRequestDto(
         @NotBlank(message = "Task detail can not be blank.")
         String taskDetails,
 

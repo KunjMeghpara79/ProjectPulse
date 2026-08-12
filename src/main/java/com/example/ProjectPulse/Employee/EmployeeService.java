@@ -10,24 +10,26 @@ public class EmployeeService {
 
     private final EmployeeRepo employeeRepo;
 
+    private final EmployeeMapper employeeMapper;
     private final TaskRepo taskRepo;
 
-    public EmployeeService(EmployeeRepo employeeRepo, TaskRepo taskRepo) {
+    public EmployeeService(EmployeeRepo employeeRepo, EmployeeMapper employeeMapper, TaskRepo taskRepo) {
         this.employeeRepo = employeeRepo;
+        this.employeeMapper = employeeMapper;
         this.taskRepo = taskRepo;
     }
 
-    public EmployeeResponseDto createEmployee(EmployeeDto employeeDto){
-        Employee employee = new Employee();
-        employee.setEmployeeName(employeeDto.employeeName());
-        employee.setEmployeeEmail(employeeDto.employeeEmail());
+    public EmployeeResponseDto createEmployee(EmployeeRequestDto employeeRequestDto){
+        Employee employee = employeeMapper.employeeRequestDtoToEmployee(employeeRequestDto);
+        boolean employeeExists = employeeRepo.existsByEmployeeEmail(employeeRequestDto.employeeEmail());
+        if (employeeExists) throw new ResponseStatusException(HttpStatus.CONFLICT);
         employeeRepo.save(employee);
-        return new EmployeeResponseDto(employee.getEmployeeId(),employee.getEmployeeName(),employee.getEmployeeEmail());
+        return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
 
     public EmployeeResponseDto getEmployee(int id) {
         Employee employee = employeeRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return new EmployeeResponseDto(employee.getEmployeeId(),employee.getEmployeeName(),employee.getEmployeeEmail());
+        return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
 
     /*
@@ -35,12 +37,12 @@ public class EmployeeService {
     that allows you to easily map an HTTP status code and a custom text message to a specific error.
     */
 
-    public EmployeeResponseDto updateEmployee(int id, EmployeeDto employeeDto) {
+    public EmployeeResponseDto updateEmployee(int id, EmployeeRequestDto employeeRequestDto) {
         Employee employee = employeeRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if(employeeDto.employeeName() != null) employee.setEmployeeName(employeeDto.employeeName());
-        if(employeeDto.employeeEmail() != null) employee.setEmployeeEmail(employeeDto.employeeEmail());
+        if(employeeRequestDto.employeeName() != null) employee.setEmployeeName(employeeRequestDto.employeeName());
+        if(employeeRequestDto.employeeEmail() != null) employee.setEmployeeEmail(employeeRequestDto.employeeEmail());
         employeeRepo.save(employee);
-        return new EmployeeResponseDto(employee.getEmployeeId(),employee.getEmployeeName(),employee.getEmployeeEmail());
+        return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
 
     public boolean deleteEmployeeById(int id)  {

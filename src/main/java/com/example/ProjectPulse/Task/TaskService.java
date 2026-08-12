@@ -1,7 +1,6 @@
 package com.example.ProjectPulse.Task;
 
 import com.example.ProjectPulse.Employee.EmployeeRepo;
-import com.example.ProjectPulse.Project.Project;
 import com.example.ProjectPulse.Project.ProjectRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -38,14 +37,14 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskResponseDto createTask(TaskDto taskDto){
-        boolean employeeExists = employeeRepo.existsById(taskDto.employeeId());
-        boolean projectExists = projectRepo.existsById(taskDto.projectId());
+    public TaskResponseDto createTask(TaskRequestDto taskRequestDto){
+        boolean employeeExists = employeeRepo.existsById(taskRequestDto.employeeId());
+        boolean projectExists = projectRepo.existsById(taskRequestDto.projectId());
         if (!employeeExists || !projectExists) throw new ResponseStatusException(HttpStatus.CONFLICT);
         Task task = new Task();
-        task.setEmployeeId(taskDto.employeeId());
-        task.setProjectId(taskDto.projectId());
-        task.setTaskDetails(taskDto.taskDetails());
+        task.setEmployeeId(taskRequestDto.employeeId());
+        task.setProjectId(taskRequestDto.projectId());
+        task.setTaskDetails(taskRequestDto.taskDetails());
         task.setTaskStatus(TaskStatus.PENDING);
         taskRepo.save(task);
         projectRepo.findById(task.getProjectId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getTasks().add(task);

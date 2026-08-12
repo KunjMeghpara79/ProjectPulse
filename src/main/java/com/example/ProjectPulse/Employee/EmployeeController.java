@@ -15,8 +15,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeResponseDto> createEmployee(@Valid @RequestBody EmployeeDto employeeDto){
-        EmployeeResponseDto employee = employeeService.createEmployee(employeeDto);
+    public ResponseEntity<EmployeeResponseDto> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeRequestDto){
+        EmployeeResponseDto employee = employeeService.createEmployee(employeeRequestDto);
         return new ResponseEntity<>(employee, HttpStatus.CREATED);
     }
 
@@ -27,8 +27,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/update/{employeeId}")
-    public ResponseEntity<EmployeeResponseDto> updateEmployeeName(@PathVariable int employeeId,@RequestBody EmployeeDto employeeDto) {
-        EmployeeResponseDto employee = employeeService.updateEmployee(employeeId,employeeDto);
+    public ResponseEntity<EmployeeResponseDto> updateEmployeeName(@PathVariable int employeeId,@RequestBody EmployeeRequestDto employeeRequestDto) {
+        EmployeeResponseDto employee = employeeService.updateEmployee(employeeId, employeeRequestDto);
         return new ResponseEntity<>(employee,HttpStatus.OK);
     }
 

@@ -12,11 +12,6 @@ public class Project {
 
     @Column(unique = true, nullable = false)
     private String projectName;
-
-    public int getProjectId() {
-        return projectId;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int projectId;
@@ -33,6 +28,11 @@ public class Project {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "projectId")
     private List<Task> task;
+
+    public int getProjectId() {
+        return projectId;
+    }
+
 
 
     public String getProjectName() {

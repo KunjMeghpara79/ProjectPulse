@@ -2,9 +2,8 @@ package com.example.ProjectPulse.Employee;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
-public record EmployeeDto(
+public record EmployeeRequestDto(
         @NotBlank(message = "Employee name can not be blank")
         String employeeName,
 

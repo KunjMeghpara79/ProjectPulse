@@ -16,9 +16,9 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectDto projectDto){
+    public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto projectRequestDto){
         try {
-            ProjectResponseDto projectResponseDto = projectService.createProject(projectDto);
+            ProjectResponseDto projectResponseDto = projectService.createProject(projectRequestDto);
             return new ResponseEntity<>(projectResponseDto, HttpStatus.CREATED);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);

@@ -29,6 +29,7 @@ public class ProjectService {
     private final ProjectRepo projectRepo;
     private final TaskRepo taskRepo;
 
+
     public ProjectService(TaskService taskService, EmployeeService employeeService, ProjectRepo projectRepo, TaskRepo taskRepo) {
         this.taskService = taskService;
         this.employeeService = employeeService;
@@ -49,9 +50,9 @@ public class ProjectService {
         }else return false;
     }
 
-    public ProjectResponseDto createProject(ProjectDto projectDto) {
+    public ProjectResponseDto createProject(ProjectRequestDto projectRequestDto) {
         Project project = new Project();
-        project.setProjectName(projectDto.projectName());
+        project.setProjectName(projectRequestDto.projectName());
         project.setEmployees(new ArrayList<>());
         project.setTask(new ArrayList<>());
         projectRepo.save(project);

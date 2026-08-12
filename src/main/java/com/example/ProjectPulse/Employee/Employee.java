@@ -1,8 +1,5 @@
 package com.example.ProjectPulse.Employee;
-import jakarta.persistence.Entity; // CORRECT
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,7 +14,7 @@ public class Employee {
 
     private String employeeName;
 
-
+    @Column(unique = true, nullable = false)
     private String employeeEmail;
 
     public String getEmployeeEmail() {
