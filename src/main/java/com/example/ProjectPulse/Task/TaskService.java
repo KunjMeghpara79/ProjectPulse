@@ -16,7 +16,6 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepo taskRepo;
-
     private final EmployeeRepo employeeRepo;
     private final ProjectRepo projectRepo;
     private final TaskMapper taskMapper;
@@ -42,7 +41,7 @@ public class TaskService {
     public TaskResponseDto createTask(TaskRequestDto taskRequestDto){
         boolean employeeExists = employeeRepo.existsById(taskRequestDto.employeeId());
         boolean projectExists = projectRepo.existsById(taskRequestDto.projectId());
-        if (!employeeExists || !projectExists) throw new ResponseStatusException(HttpStatus.CONFLICT);
+        if (!employeeExists || !projectExists) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         Task task = taskMapper.taskRequestDtoToTask(taskRequestDto);
         task.setTaskStatus(TaskStatus.PENDING);
         taskRepo.save(task);

@@ -56,24 +56,14 @@ public class ProjectService {
 
         Project project = projectMapper.projectRequestDtoToProject(projectRequestDto);
         projectRepo.save(project);
-        List<EmployeeResponseDto> employees = project.getEmployees().stream()
-                .map(emp -> new EmployeeResponseDto(emp.getEmployeeId(),emp.getEmployeeName(),emp.getEmployeeEmail()))
-                .toList();
-        List<TaskResponseDto> tasks = project.getTasks().stream()
-                .map(task -> new TaskResponseDto(task.getTaskId(),task.getTaskDetails(),task.getTaskStatus(),task.getProjectId(),task.getEmployeeId()))
-                .toList();
-        return new ProjectResponseDto(project.getProjectId(),project.getProjectName(),employees,tasks);
+
+        return projectMapper.projectToProjectResponseDto(project);
     }
 
     public ProjectResponseDto findProjectById(int id) {
         Project project =  projectRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        List<EmployeeResponseDto> employees = project.getEmployees().stream()
-                .map(emp -> new EmployeeResponseDto(emp.getEmployeeId(),emp.getEmployeeName(),emp.getEmployeeEmail()))
-                .toList();
-        List<TaskResponseDto> tasks = project.getTasks().stream()
-                .map(task -> new TaskResponseDto(task.getTaskId(),task.getTaskDetails(),task.getTaskStatus(),task.getProjectId(),task.getEmployeeId()))
-                .toList();
-        return new ProjectResponseDto(project.getProjectId(),project.getProjectName(),employees,tasks);
+
+        return projectMapper.projectToProjectResponseDto(project);
     }
 
     public ProjectResponseDto addEmployee(int projectId,int employeeId)  {
@@ -81,13 +71,8 @@ public class ProjectService {
         EmployeeResponseDto employee = employeeService.getEmployee(employeeId);
         project.getEmployees().add(new Employee(employee.employeeName(),employee.employeeId(),employee.employeeEmail()));
         projectRepo.save(project);
-        List<EmployeeResponseDto> employees = project.getEmployees().stream()
-                .map(emp -> new EmployeeResponseDto(emp.getEmployeeId(),emp.getEmployeeName(),emp.getEmployeeEmail()))
-                .toList();
-        List<TaskResponseDto> tasks = project.getTasks().stream()
-                .map(task -> new TaskResponseDto(task.getTaskId(),task.getTaskDetails(),task.getTaskStatus(),task.getProjectId(),task.getEmployeeId()))
-                .toList();
-        return new ProjectResponseDto(project.getProjectId(),project.getProjectName(),employees,tasks);
+
+        return projectMapper.projectToProjectResponseDto(project);
     }
 
     public Project updateProject(int id,String name){
