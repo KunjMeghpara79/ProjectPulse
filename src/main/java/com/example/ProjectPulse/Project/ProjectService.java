@@ -10,6 +10,9 @@ import com.example.ProjectPulse.Task.Task;
 import com.example.ProjectPulse.Task.TaskRepo;
 import com.example.ProjectPulse.Task.TaskService;
 import com.example.ProjectPulse.Task.TaskStatus;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,6 +38,7 @@ public class ProjectService {
     private final TaskRepo taskRepo;
     private final ProjectMapper projectMapper;
     private final EmployeeRepo employeeRepo;
+    private final Logger log = LoggerFactory.getLogger(TaskService.class);
     public ProjectService(TaskService taskService, EmployeeService employeeService, ProjectRepo projectRepo, TaskRepo taskRepo, ProjectMapper projectMapper, EmployeeRepo employeeRepo) {
         this.taskService = taskService;
         this.employeeService = employeeService;
@@ -58,7 +62,10 @@ public class ProjectService {
     }
 
     public ProjectResponseDto createProject(ProjectRequestDto projectRequestDto) {
-        if (projectRepo.existsByProjectName(projectRequestDto.projectName())){throw new ProjectAlreadyExistsException("Project Already Exists");}
+        if (projectRepo.existsByProjectName(projectRequestDto.projectName())){
+            log.error("Project already exists!");
+            throw new ProjectAlreadyExistsException("Project already exists!");
+        }
 
         Project project = projectMapper.projectRequestDtoToProject(projectRequestDto);
         projectRepo.save(project);
@@ -67,14 +74,23 @@ public class ProjectService {
     }
 
     public ProjectResponseDto findProjectById(int id) {
-        Project project =  projectRepo.findById(id).orElseThrow(() -> new ProjectNotFoundException("Project not found !"));
+        Project project =  projectRepo.findById(id).orElseThrow(() -> {
+            log.error("Project not found!");
+            return new ProjectNotFoundException("Project not found!");
+        });
 
         return projectMapper.projectToProjectResponseDto(project);
     }
 
     public ProjectResponseDto addEmployee(int projectId,int employeeId)  {
-        Project project = projectRepo.findById(projectId).orElseThrow(() -> new ProjectNotFoundException("Project not found !"));
-        Employee employee = employeeRepo.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException("Employee not found !"));
+        Project project = projectRepo.findById(projectId).orElseThrow(() -> {
+            log.error("Project not found!");
+            return new ProjectNotFoundException("Project not found!");
+        });
+        Employee employee = employeeRepo.findById(employeeId).orElseThrow(() -> {
+            log.error("Employee not found!");
+            return new ProjectNotFoundException("Employee not found!");
+        });
         project.getEmployees().add(employee);
         projectRepo.save(project);
         return projectMapper.projectToProjectResponseDto(project);
