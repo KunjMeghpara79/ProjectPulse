@@ -21,17 +21,15 @@ public class Project {
     @JoinColumn(name = "projectId")
     private List<Employee> employees;
 
-    /*
-    When you fetch a Project object from the database,
-     Hibernate will populate projectId and projectName but will put Lazy-Loading Proxies (placeholder objects) in place of the employees
+     /*
+      When you fetch a Project object from the database,
+      Hibernate will populate projectId and projectName but will put Lazy-Loading Proxies (placeholder objects) in place of the employees
       and task lists. The actual database queries to fetch those lists will not run until you explicitly trigger them.
      */
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "projectId")
     private List<Task> task;
-
-
 
     public int getProjectId() {
         return projectId;
@@ -46,8 +44,6 @@ public class Project {
         return task;
     }
 
-
-
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
@@ -57,10 +53,5 @@ public class Project {
     public void setTask(List<Task> task) {
         this.task = task;
     }
-
-
-
-
-
 
 }
