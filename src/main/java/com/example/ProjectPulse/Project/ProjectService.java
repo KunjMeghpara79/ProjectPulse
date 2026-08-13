@@ -31,6 +31,7 @@ exception into spring's DataAccessException)
 It tells the Spring container that the annotated class is responsible for the persistence layer, which handles database operations
 */
 @Service
+@Slf4j
 public class ProjectService {
     private final TaskService taskService;
     private final EmployeeService employeeService;
@@ -38,7 +39,7 @@ public class ProjectService {
     private final TaskRepo taskRepo;
     private final ProjectMapper projectMapper;
     private final EmployeeRepo employeeRepo;
-    private final Logger log = LoggerFactory.getLogger(TaskService.class);
+   //private final Logger log = LoggerFactory.getLogger(TaskService.class);
     public ProjectService(TaskService taskService, EmployeeService employeeService, ProjectRepo projectRepo, TaskRepo taskRepo, ProjectMapper projectMapper, EmployeeRepo employeeRepo) {
         this.taskService = taskService;
         this.employeeService = employeeService;

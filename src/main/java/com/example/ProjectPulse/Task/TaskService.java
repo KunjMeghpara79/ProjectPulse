@@ -19,13 +19,14 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@Slf4j
 public class TaskService {
 
     private final TaskRepo taskRepo;
     private final EmployeeRepo employeeRepo;
     private final ProjectRepo projectRepo;
     private final TaskMapper taskMapper;
-    private final Logger log = LoggerFactory.getLogger(TaskService.class);
+   // private final Logger log = LoggerFactory.getLogger(TaskService.class);
     public TaskService(TaskRepo taskRepo, EmployeeRepo employeeRepo, ProjectRepo projectRepo, TaskMapper taskMapper) {
         this.taskRepo = taskRepo;
         this.employeeRepo = employeeRepo;

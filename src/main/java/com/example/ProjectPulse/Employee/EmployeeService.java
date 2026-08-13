@@ -12,13 +12,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@Slf4j
 public class EmployeeService {
 
     private final EmployeeRepo employeeRepo;
 
     private final EmployeeMapper employeeMapper;
     private final TaskRepo taskRepo;
-    private final Logger log = LoggerFactory.getLogger(TaskService.class);
+   // private final Logger log = LoggerFactory.getLogger(TaskService.class);
     public EmployeeService(EmployeeRepo employeeRepo, EmployeeMapper employeeMapper, TaskRepo taskRepo) {
         this.employeeRepo = employeeRepo;
         this.employeeMapper = employeeMapper;
