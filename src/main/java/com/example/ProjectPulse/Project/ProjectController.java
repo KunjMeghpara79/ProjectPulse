@@ -17,12 +17,8 @@ public class ProjectController {
 
     @PostMapping
     public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto projectRequestDto){
-        try {
             ProjectResponseDto projectResponseDto = projectService.createProject(projectRequestDto);
             return new ResponseEntity<>(projectResponseDto, HttpStatus.CREATED);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        }
     }
 
     @GetMapping("/{projectId}")

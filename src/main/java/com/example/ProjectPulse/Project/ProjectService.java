@@ -2,16 +2,19 @@ package com.example.ProjectPulse.Project;
 
 import com.example.ProjectPulse.Employee.Employee;
 import com.example.ProjectPulse.Employee.EmployeeRepo;
-import com.example.ProjectPulse.Employee.EmployeeResponseDto;
 import com.example.ProjectPulse.Employee.EmployeeService;
-import com.example.ProjectPulse.Task.*;
+import com.example.ProjectPulse.Exceptions.EmployeeNotFoundException;
+import com.example.ProjectPulse.Exceptions.ProjectAlreadyExistsException;
+import com.example.ProjectPulse.Exceptions.ProjectNotFoundException;
+import com.example.ProjectPulse.Task.Task;
+import com.example.ProjectPulse.Task.TaskRepo;
+import com.example.ProjectPulse.Task.TaskService;
+import com.example.ProjectPulse.Task.TaskStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /*
 @Component : A class annotated by this annotation will be automatically registered as spring managed bean
@@ -55,7 +58,7 @@ public class ProjectService {
     }
 
     public ProjectResponseDto createProject(ProjectRequestDto projectRequestDto) {
-        if (projectRepo.existsByProjectName(projectRequestDto.projectName())){throw new ResponseStatusException(HttpStatus.CONFLICT);}
+        if (projectRepo.existsByProjectName(projectRequestDto.projectName())){throw new ProjectAlreadyExistsException("Project Already Exists");}
 
         Project project = projectMapper.projectRequestDtoToProject(projectRequestDto);
         projectRepo.save(project);
@@ -64,14 +67,14 @@ public class ProjectService {
     }
 
     public ProjectResponseDto findProjectById(int id) {
-        Project project =  projectRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Project project =  projectRepo.findById(id).orElseThrow(() -> new ProjectNotFoundException("Project not found !"));
 
         return projectMapper.projectToProjectResponseDto(project);
     }
 
     public ProjectResponseDto addEmployee(int projectId,int employeeId)  {
-        Project project = projectRepo.findById(projectId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        Employee employee = employeeRepo.findById(employeeId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Project project = projectRepo.findById(projectId).orElseThrow(() -> new ProjectNotFoundException("Project not found !"));
+        Employee employee = employeeRepo.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException("Employee not found !"));
         project.getEmployees().add(employee);
         projectRepo.save(project);
         return projectMapper.projectToProjectResponseDto(project);

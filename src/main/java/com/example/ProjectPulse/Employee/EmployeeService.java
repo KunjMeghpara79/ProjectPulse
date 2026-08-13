@@ -1,5 +1,7 @@
 package com.example.ProjectPulse.Employee;
 
+import com.example.ProjectPulse.Exceptions.EmployeeAlreadyExistsException;
+import com.example.ProjectPulse.Exceptions.EmployeeNotFoundException;
 import com.example.ProjectPulse.Task.TaskRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,13 +24,13 @@ public class EmployeeService {
     public EmployeeResponseDto createEmployee(EmployeeRequestDto employeeRequestDto){
         Employee employee = employeeMapper.employeeRequestDtoToEmployee(employeeRequestDto);
         boolean employeeExists = employeeRepo.existsByEmployeeEmail(employeeRequestDto.employeeEmail());
-        if (employeeExists) throw new ResponseStatusException(HttpStatus.CONFLICT);
+        if (employeeExists) throw new EmployeeAlreadyExistsException("Employee Already exists!");
         employeeRepo.save(employee);
         return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
 
     public EmployeeResponseDto getEmployee(int id) {
-        Employee employee = employeeRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Employee employee = employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
         return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
 
@@ -38,7 +40,7 @@ public class EmployeeService {
     */
 
     public EmployeeResponseDto updateEmployee(int id, EmployeeRequestDto employeeRequestDto) {
-        Employee employee = employeeRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Employee employee = employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee Not found"));
         if(employeeRequestDto.employeeName() != null) employee.setEmployeeName(employeeRequestDto.employeeName());
         if(employeeRequestDto.employeeEmail() != null) employee.setEmployeeEmail(employeeRequestDto.employeeEmail());
         employeeRepo.save(employee);

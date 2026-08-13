@@ -1,6 +1,9 @@
 package com.example.ProjectPulse.Task;
 
 import com.example.ProjectPulse.Employee.EmployeeRepo;
+import com.example.ProjectPulse.Exceptions.EmployeeNotFoundException;
+import com.example.ProjectPulse.Exceptions.ProjectNotFoundException;
+import com.example.ProjectPulse.Exceptions.TaskNotFoundException;
 import com.example.ProjectPulse.Project.ProjectRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -42,11 +45,12 @@ public class TaskService {
     public TaskResponseDto createTask(TaskRequestDto taskRequestDto){
         boolean employeeExists = employeeRepo.existsById(taskRequestDto.employeeId());
         boolean projectExists = projectRepo.existsById(taskRequestDto.projectId());
-        if (!employeeExists || !projectExists) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if(!projectExists) throw new ProjectNotFoundException("Project not found !");
+        if(!employeeExists) throw new EmployeeNotFoundException("Employee Not found !");
         Task task = taskMapper.taskRequestDtoToTask(taskRequestDto);
         task.setTaskStatus(TaskStatus.PENDING);
         taskRepo.save(task);
-        projectRepo.findById(task.getProjectId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).getTasks().add(task);
+        projectRepo.findById(task.getProjectId()).orElseThrow(() -> new ProjectNotFoundException("Project not found !")).getTasks().add(task);
         return taskMapper.taskToTaskResponseDto(task);
     }
 
@@ -56,7 +60,7 @@ public class TaskService {
     }
 
     public void delteTask(int id){
-        Task task = taskRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Task task = taskRepo.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found !"));
         taskRepo.deleteById(id);
     }
 }

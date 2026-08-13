@@ -30,7 +30,7 @@ public class TaskController {
     @DeleteMapping("/{taskId}")
     public ResponseEntity deleteTask(@PathVariable int taskId){
         taskService.delteTask(taskId);
-        return  new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }
