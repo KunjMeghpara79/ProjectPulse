@@ -9,5 +9,10 @@ public record EmployeeRequestDto(
 
         @NotBlank(message = "Employee email can not be blank")
         @Email(message = "Email format is invalid")
-        String employeeEmail
+        String employeeEmail,
+
+        @NotBlank(message = "Password can not be blank")
+        String password,
+
+        EmployeeType employeeType
 ) {}

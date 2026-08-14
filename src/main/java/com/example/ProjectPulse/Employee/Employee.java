@@ -1,7 +1,5 @@
 package com.example.ProjectPulse.Employee;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Employee {
@@ -15,16 +13,26 @@ public class Employee {
     @Column(unique = true, nullable = false)
     private String employeeEmail;
 
+    private String password;
+
+
+
+
+
+    private EmployeeType employeeType;
 
     public Employee() {
     }
-    public Employee(String employeeName, int employeeId, String employeeEmail) {
+    public Employee(String employeeName, int employeeId, String employeeEmail,String password) {
         this.employeeName = employeeName;
         this.employeeId = employeeId;
         this.employeeEmail = employeeEmail;
+        this.password = password;
     }
 
-
+    public String getPassword() {
+        return password;
+    }
     public String getEmployeeEmail() {
         return this.employeeEmail;
     }
@@ -34,15 +42,21 @@ public class Employee {
     public int getEmployeeId() {
         return this.employeeId;
     }
+    public EmployeeType getEmployeeType() {
+        return employeeType;
+    }
 
-
-
+    public void setEmployeeType(EmployeeType employeeType) {
+        this.employeeType = employeeType;
+    }
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
     }
     public void setEmployeeEmail(String employeeEmail) {
         this.employeeEmail = employeeEmail;
     }
-
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 }
