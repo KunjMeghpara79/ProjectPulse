@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,12 +17,13 @@ import org.springframework.web.server.ResponseStatusException;
 public class EmployeeService {
 
     private final EmployeeRepo employeeRepo;
-
+private final PasswordEncoder passwordEncoder;
     private final EmployeeMapper employeeMapper;
     private final TaskRepo taskRepo;
    // private final Logger log = LoggerFactory.getLogger(TaskService.class);
-    public EmployeeService(EmployeeRepo employeeRepo, EmployeeMapper employeeMapper, TaskRepo taskRepo) {
+    public EmployeeService(EmployeeRepo employeeRepo, PasswordEncoder passwordEncoder, EmployeeMapper employeeMapper, TaskRepo taskRepo) {
         this.employeeRepo = employeeRepo;
+        this.passwordEncoder = passwordEncoder;
         this.employeeMapper = employeeMapper;
         this.taskRepo = taskRepo;
     }
@@ -32,7 +34,7 @@ public class EmployeeService {
         if (employeeExists) {
             log.error("Employee Already exists!");
             throw new EmployeeAlreadyExistsException("Employee Already exists!");
-        }
+        }employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         employeeRepo.save(employee);
         return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
