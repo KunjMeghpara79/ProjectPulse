@@ -40,4 +40,9 @@ public class GlobalExceptionsHandler {
     public ErrorResponse handleTaskNotFoundException(TaskNotFoundException ex){
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
+    @ExceptionHandler(value = InvalidUsernameOrPasswordException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleLoginFailure(InvalidUsernameOrPasswordException ex){
+        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    }
 }

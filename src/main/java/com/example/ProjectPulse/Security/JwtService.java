@@ -14,13 +14,13 @@ import java.util.function.Function;
 
 @Service
 public class JwtService{
-    @Value("${jwt.secret}")
+
     private final String SECRET_KEY;
 
-    @Value("${jwt.expiration}")
+
     private final long EXPIRATION_TIME;
 
-    public JwtService(String secretKey, long expirationTime) {
+    public JwtService(@Value("${jwt.secret}") String secretKey, @Value("${jwt.expiration}") long expirationTime) {
         SECRET_KEY = secretKey;
         EXPIRATION_TIME = expirationTime;
     }

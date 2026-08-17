@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,6 +29,7 @@ private final PasswordEncoder passwordEncoder;
         this.taskRepo = taskRepo;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public EmployeeResponseDto createEmployee(EmployeeRequestDto employeeRequestDto){
         Employee employee = employeeMapper.employeeRequestDtoToEmployee(employeeRequestDto);
         boolean employeeExists = employeeRepo.existsByEmployeeEmail(employeeRequestDto.employeeEmail());
@@ -63,6 +65,7 @@ private final PasswordEncoder passwordEncoder;
         return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public boolean deleteEmployeeById(int id)  {
         if(!employeeRepo.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

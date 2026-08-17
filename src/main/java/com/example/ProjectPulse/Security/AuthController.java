@@ -19,30 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final AuthService authService;
+
 
     private final EmployeeRepo employeeRepo;
     private final JwtService jwtService;
-    public AuthController(EmployeeRepo employeeRepo, JwtService jwtService) {
+    public AuthController(PasswordEncoder passwordEncoder, AuthService authService, EmployeeRepo employeeRepo, JwtService jwtService) {
+        this.passwordEncoder = passwordEncoder;
+        this.authService = authService;
         this.employeeRepo = employeeRepo;
         this.jwtService = jwtService;
 
     }
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDto loginRequestDto) {
-        // 1. Fetch user from DB using the email
-       Employee employee = employeeRepo.findByEmployeeEmail(loginRequestDto.email());
-
-
-        // 2. Directly verify the incoming password against the hashed DB password
-        if (!passwordEncoder.matches(loginRequestDto.password(), employee.getPassword())) {
-            return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
-        }
-
-        // 3. Generate token if credentials match
-        String token = jwtService.generateToken(loginRequestDto.email());
-        return new ResponseEntity<>(token, HttpStatus.OK);
+        String token = authService.loginValidator(loginRequestDto);
+        return new ResponseEntity<>(token,HttpStatus.OK);
     }
 
 }

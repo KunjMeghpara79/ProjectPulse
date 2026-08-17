@@ -15,10 +15,7 @@ public class Employee {
 
     private String password;
 
-
-
-
-
+    @Enumerated(EnumType.STRING)
     private EmployeeType employeeType;
 
     public Employee() {

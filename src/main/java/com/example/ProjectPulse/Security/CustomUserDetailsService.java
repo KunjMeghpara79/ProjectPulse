@@ -23,9 +23,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Employee employee = employeeRepo.findByEmployeeEmail(username);
         if(employee == null) throw new EmployeeNotFoundException("Employee not found!");
-        return User.builder()
-                .username(username)
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(employee.getEmployeeEmail())
                 .password(employee.getPassword())
+                .authorities("ROLE_" + employee.getEmployeeType().name())
                 .build();
     }
 
