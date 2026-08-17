@@ -49,10 +49,7 @@ private final PasswordEncoder passwordEncoder;
         return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
 
-    /*
-    ResponseStatusException is a built-in Java class provided by the Spring Framework
-    that allows you to easily map an HTTP status code and a custom text message to a specific error.
-    */
+
 
     public EmployeeResponseDto updateEmployee(int id, EmployeeRequestDto employeeRequestDto) {
         Employee employee = employeeRepo.findById(id).orElseThrow(() ->{
