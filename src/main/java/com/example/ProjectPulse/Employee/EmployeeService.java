@@ -29,7 +29,7 @@ private final PasswordEncoder passwordEncoder;
         this.taskRepo = taskRepo;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     public EmployeeResponseDto createEmployee(EmployeeRequestDto employeeRequestDto){
         Employee employee = employeeMapper.employeeRequestDtoToEmployee(employeeRequestDto);
         boolean employeeExists = employeeRepo.existsByEmployeeEmail(employeeRequestDto.employeeEmail());

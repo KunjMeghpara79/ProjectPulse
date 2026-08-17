@@ -3,7 +3,9 @@ package com.example.ProjectPulse.Project;
 import com.example.ProjectPulse.Employee.Employee;
 import com.example.ProjectPulse.Employee.EmployeeRepo;
 import com.example.ProjectPulse.Employee.EmployeeService;
+import com.example.ProjectPulse.Employee.EmployeeType;
 import com.example.ProjectPulse.Exceptions.EmployeeNotFoundException;
+import com.example.ProjectPulse.Exceptions.EmployeeNotInProjectException;
 import com.example.ProjectPulse.Exceptions.ProjectAlreadyExistsException;
 import com.example.ProjectPulse.Exceptions.ProjectNotFoundException;
 import com.example.ProjectPulse.Task.Task;
@@ -14,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -60,7 +64,7 @@ public class ProjectService {
             }
         }else return false;
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     public ProjectResponseDto createProject(ProjectRequestDto projectRequestDto) {
         if (projectRepo.existsByProjectName(projectRequestDto.projectName())){
             log.error("Project already exists!");
@@ -72,13 +76,29 @@ public class ProjectService {
     }
 
     public ProjectResponseDto findProjectById(int id) {
+        boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
         Project project =  projectRepo.findById(id).orElseThrow(() -> {
             log.error("Project not found!");
             return new ProjectNotFoundException("Project not found!");
         });
-        return projectMapper.projectToProjectResponseDto(project);
+        if(isAdmin){
+            return projectMapper.projectToProjectResponseDto(project);
+        }else {
+            String email = SecurityContextHolder.getContext().getAuthentication().getName();
+            Employee employee = employeeRepo.findByEmployeeEmail(email);
+            if (employee == null) {
+                throw new EmployeeNotFoundException("Employee not found!");
+            }
+            if(!project.getEmployees().contains(employee)){
+                throw new EmployeeNotInProjectException("You can not access the project information as you are not part of this project");
+            }
+            return projectMapper.projectToProjectResponseDto(project);
+        }
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     public ProjectResponseDto addEmployee(int projectId,int employeeId)  {
         Project project = projectRepo.findById(projectId).orElseThrow(() -> {
             log.error("Project not found!");

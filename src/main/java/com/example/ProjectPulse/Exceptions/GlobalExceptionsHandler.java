@@ -45,4 +45,10 @@ public class GlobalExceptionsHandler {
     public ErrorResponse handleLoginFailure(InvalidUsernameOrPasswordException ex){
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
+
+    @ExceptionHandler(value = EmployeeNotInProjectException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleInvalidProjectSearch(EmployeeNotInProjectException ex){
+        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    }
 }
