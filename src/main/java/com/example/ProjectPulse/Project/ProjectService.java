@@ -51,7 +51,6 @@ public class ProjectService {
 
     public boolean addTask(Project p, Task t){
         TaskStatus taskStatus = taskService.checkTaskStatus(t);
-
         if(taskStatus == TaskStatus.PENDING){
             List<Task> tasks = p.getTasks();
             if(taskService.checkTaskFromList(t,p.getTasks())) return false;
@@ -67,10 +66,8 @@ public class ProjectService {
             log.error("Project already exists!");
             throw new ProjectAlreadyExistsException("Project already exists!");
         }
-
         Project project = projectMapper.projectRequestDtoToProject(projectRequestDto);
         projectRepo.save(project);
-
         return projectMapper.projectToProjectResponseDto(project);
     }
 
@@ -79,7 +76,6 @@ public class ProjectService {
             log.error("Project not found!");
             return new ProjectNotFoundException("Project not found!");
         });
-
         return projectMapper.projectToProjectResponseDto(project);
     }
 
