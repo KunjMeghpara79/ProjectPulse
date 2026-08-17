@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,17 @@ import java.util.Date;
 import java.util.function.Function;
 
 @Service
-public class JwtService {
-    private final String SECRET_KEY = "3cfa76ef14937c1c0ea519f8dae24bbd1a4e21a2c3b4c5d6e7f8a9b0c1d2e3f4";
-    private static final long EXPIRATION_TIME = 86400000;
+public class JwtService{
+    @Value("${jwt.secret}")
+    private final String SECRET_KEY;
+
+    @Value("${jwt.expiration}")
+    private final long EXPIRATION_TIME;
+
+    public JwtService(String secretKey, long expirationTime) {
+        SECRET_KEY = secretKey;
+        EXPIRATION_TIME = expirationTime;
+    }
 
     public String generateToken(String username){
         return Jwts.builder()
