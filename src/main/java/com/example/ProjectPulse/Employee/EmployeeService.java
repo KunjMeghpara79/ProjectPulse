@@ -62,7 +62,7 @@ private final PasswordEncoder passwordEncoder;
         return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     public boolean deleteEmployeeById(int id)  {
         if(!employeeRepo.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
