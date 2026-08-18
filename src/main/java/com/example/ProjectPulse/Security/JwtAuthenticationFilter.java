@@ -44,9 +44,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         null,
                         userDetails.getAuthorities()
                 );
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                // This logs the user in for the duration of this specific request
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }

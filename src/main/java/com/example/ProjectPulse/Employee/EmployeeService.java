@@ -18,10 +18,9 @@ import org.springframework.web.server.ResponseStatusException;
 public class EmployeeService {
 
     private final EmployeeRepo employeeRepo;
-private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final EmployeeMapper employeeMapper;
     private final TaskRepo taskRepo;
-   // private final Logger log = LoggerFactory.getLogger(TaskService.class);
     public EmployeeService(EmployeeRepo employeeRepo, PasswordEncoder passwordEncoder, EmployeeMapper employeeMapper, TaskRepo taskRepo) {
         this.employeeRepo = employeeRepo;
         this.passwordEncoder = passwordEncoder;
