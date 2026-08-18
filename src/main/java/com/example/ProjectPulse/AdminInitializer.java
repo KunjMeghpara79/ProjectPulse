@@ -1,0 +1,37 @@
+package com.example.ProjectPulse;
+
+import com.example.ProjectPulse.Employee.Employee;
+import com.example.ProjectPulse.Employee.EmployeeRepo;
+import com.example.ProjectPulse.Employee.EmployeeType;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+@Component
+public class AdminInitializer implements CommandLineRunner {
+
+    private final EmployeeRepo employeeRepo;
+    public AdminInitializer(EmployeeRepo employeeRepo) {
+        this.employeeRepo = employeeRepo;
+    }
+
+    @Value("${admin.name}")
+    private String adminName;
+
+    @Value("${admin.email}")
+    private String adminEmail;
+
+    @Value("${admin.password}")
+    private String adminPassword;
+
+    @Override
+    public void run(String... args) throws Exception {
+        Employee employee = new Employee();
+        employee.setEmployeeName(adminName);
+        employee.setEmployeeEmail(adminEmail);
+        employee.setPassword(adminPassword);
+        employee.setEmployeeType(EmployeeType.ADMIN);
+        employeeRepo.save(employee);
+    }
+}
