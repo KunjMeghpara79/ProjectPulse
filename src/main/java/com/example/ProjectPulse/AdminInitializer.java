@@ -31,11 +31,13 @@ public class AdminInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        Employee employee = new Employee();
-        employee.setEmployeeName(adminName);
-        employee.setEmployeeEmail(adminEmail);
-        employee.setPassword(passwordEncoder.encode(adminPassword));
-        employee.setEmployeeType(EmployeeType.ADMIN);
-        employeeRepo.save(employee);
+        if(!employeeRepo.existsByEmployeeType(EmployeeType.ADMIN)) {
+            Employee employee = new Employee();
+            employee.setEmployeeName(adminName);
+            employee.setEmployeeEmail(adminEmail);
+            employee.setPassword(passwordEncoder.encode(adminPassword));
+            employee.setEmployeeType(EmployeeType.ADMIN);
+            employeeRepo.save(employee);
+        }
     }
 }
