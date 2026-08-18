@@ -3,6 +3,7 @@ package com.example.ProjectPulse;
 import com.example.ProjectPulse.Employee.Employee;
 import com.example.ProjectPulse.Employee.EmployeeRepo;
 import com.example.ProjectPulse.Employee.EmployeeType;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,7 @@ public class AdminInitializer implements CommandLineRunner {
     private String adminPassword;
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         Employee employee = new Employee();
         employee.setEmployeeName(adminName);

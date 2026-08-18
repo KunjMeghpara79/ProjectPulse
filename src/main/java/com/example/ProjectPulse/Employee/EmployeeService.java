@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
 @Service
 @Slf4j
 public class EmployeeService {
@@ -27,7 +30,6 @@ public class EmployeeService {
         this.employeeMapper = employeeMapper;
         this.taskRepo = taskRepo;
     }
-
 
     public EmployeeResponseDto createEmployee(EmployeeRequestDto employeeRequestDto){
         Employee employee = employeeMapper.employeeRequestDtoToEmployee(employeeRequestDto);
@@ -48,8 +50,6 @@ public class EmployeeService {
         return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
 
-
-
     public EmployeeResponseDto updateEmployee(int id, EmployeeRequestDto employeeRequestDto) {
         Employee employee = employeeRepo.findById(id).orElseThrow(() ->{
             log.error("Employee not found!");
@@ -61,9 +61,8 @@ public class EmployeeService {
         return employeeMapper.employeeToEmployeeResponseDto(employee);
     }
 
-
-    public boolean deleteEmployeeById(int id)  {
-        if(!employeeRepo.existsById(id)){
+    public boolean deleteEmployeeById(int id) {
+        if (!employeeRepo.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         taskRepo.deleteTasks(id);
