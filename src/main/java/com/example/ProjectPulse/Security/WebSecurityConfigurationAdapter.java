@@ -22,12 +22,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class WebSecurityConfigurationAdapter {
 
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     // Use standard interface type to eliminate compilation issues
-    @Autowired
-    private UserDetailsService customUserDetailsService;
+
+    private final UserDetailsService customUserDetailsService;
+
+    public WebSecurityConfigurationAdapter(JwtAuthenticationFilter jwtAuthenticationFilter, UserDetailsService customUserDetailsService) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.customUserDetailsService = customUserDetailsService;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
