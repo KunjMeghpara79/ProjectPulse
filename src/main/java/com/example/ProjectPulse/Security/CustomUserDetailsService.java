@@ -27,6 +27,17 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .username(employee.getEmployeeEmail())
                 .password(employee.getPassword())
                 .authorities("ROLE_" + employee.getEmployeeType().name())
+                /*
+                We add other authorities because a role alone may not give enough detailed control.
+
+                For example, two users can both be EMPLOYEE, but:
+
+                Employee 1 → can VIEW_PROJECT
+
+                Employee 2 → can VIEW_PROJECT and UPDATE_PROJECT
+
+                 Both have the same role, but different permissions/authorities.
+                 */
                 .build();
     }
 

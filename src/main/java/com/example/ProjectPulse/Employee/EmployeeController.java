@@ -4,6 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+/*
+ *
+ * @Controller      -> Use for WEBPAGES. Returns HTML file names (looks for templates).
+ *                     You must manually add @ResponseBody to the method.
+ *
+ * @RestController  -> Use for APIs. Returns RAW DATA (JSON) automatically.
+ *                     It is just a shortcut for @Controller + @ResponseBody combined.
+ */
 
 @RestController
 @RequestMapping("/employee")
