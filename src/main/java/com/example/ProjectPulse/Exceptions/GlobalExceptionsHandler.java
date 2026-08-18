@@ -1,9 +1,6 @@
 package com.example.ProjectPulse.Exceptions;
 
-import com.example.ProjectPulse.Project.Project;
-import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
