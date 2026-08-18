@@ -10,7 +10,7 @@ public class ErrorResponse {
     }
 
     private int statusCode;
-   private String message;
+    private String message;
     public ErrorResponse() {
     }
     public ErrorResponse(int statusCode,String message){

@@ -4,6 +4,7 @@ import com.example.ProjectPulse.Employee.EmployeeRepo;
 import com.example.ProjectPulse.Exceptions.EmployeeNotFoundException;
 import com.example.ProjectPulse.Exceptions.ProjectNotFoundException;
 import com.example.ProjectPulse.Exceptions.TaskNotFoundException;
+import com.example.ProjectPulse.Project.Project;
 import com.example.ProjectPulse.Project.ProjectRepo;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -48,11 +49,9 @@ public class TaskService {
     @Transactional
     public TaskResponseDto createTask(TaskRequestDto taskRequestDto){
         boolean employeeExists = employeeRepo.existsById(taskRequestDto.employeeId());
-        boolean projectExists = projectRepo.existsById(taskRequestDto.projectId());
-        if(!projectExists){
-            log.error("Project not found!");
-            throw new ProjectNotFoundException("Project not found !");
-        }
+
+        Project project = projectRepo.findById(taskRequestDto.projectId()).orElseThrow(() -> new ProjectNotFoundException("Project Not found!"));
+
         if(!employeeExists){
             log.error("Employee not found!");
             throw new EmployeeNotFoundException("Project not found !");
@@ -60,10 +59,7 @@ public class TaskService {
         Task task = taskMapper.taskRequestDtoToTask(taskRequestDto);
         task.setTaskStatus(TaskStatus.PENDING);
         taskRepo.save(task);
-        projectRepo.findById(task.getProjectId()).orElseThrow(() -> {
-            log.error("Project not found!");
-            return new ProjectNotFoundException("Project not found !");
-        }).getTasks().add(task);
+        project.getTasks().add(task);
         return taskMapper.taskToTaskResponseDto(task);
     }
 
