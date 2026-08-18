@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 public class AdminInitializer implements CommandLineRunner {
 
     private final EmployeeRepo employeeRepo;
-    public AdminInitializer(EmployeeRepo employeeRepo) {
+    private final PasswordEncoder passwordEncoder;
+    public AdminInitializer(EmployeeRepo employeeRepo, PasswordEncoder passwordEncoder) {
         this.employeeRepo = employeeRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Value("${admin.name}")
@@ -32,7 +34,7 @@ public class AdminInitializer implements CommandLineRunner {
         Employee employee = new Employee();
         employee.setEmployeeName(adminName);
         employee.setEmployeeEmail(adminEmail);
-        employee.setPassword(adminPassword);
+        employee.setPassword(passwordEncoder.encode(adminPassword));
         employee.setEmployeeType(EmployeeType.ADMIN);
         employeeRepo.save(employee);
     }

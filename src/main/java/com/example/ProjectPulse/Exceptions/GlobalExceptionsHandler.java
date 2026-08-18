@@ -7,45 +7,35 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionsHandler {
-
-    @ExceptionHandler(value = EmployeeAlreadyExistsException.class)
+    @ExceptionHandler({
+            EmployeeAlreadyExistsException.class,
+            ProjectAlreadyExistsException.class
+    })
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleEmployeeExistsExcepion(EmployeeAlreadyExistsException ex){
-        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+    public ErrorResponse handleConflictExceptions(Exception ex) {
+        return switch (ex) {
+            case EmployeeAlreadyExistsException e -> new ErrorResponse(HttpStatus.CONFLICT.value(), e.getMessage());
+            case ProjectAlreadyExistsException e  -> new ErrorResponse(HttpStatus.CONFLICT.value(), e.getMessage());
+            default                               -> new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+        };
     }
 
-    @ExceptionHandler(value = EmployeeNotFoundException.class)
+    @ExceptionHandler({
+            EmployeeNotFoundException.class,
+            ProjectNotFoundException.class,
+            TaskNotFoundException.class,
+            InvalidUsernameOrPasswordException.class,
+            EmployeeNotInProjectException.class
+    })
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleEmployeeNotFoundException(EmployeeNotFoundException ex){
-        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-    }
-
-    @ExceptionHandler(value = ProjectAlreadyExistsException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleProjectAlreadyExistsException(ProjectAlreadyExistsException ex){
-        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
-    }
-
-    @ExceptionHandler(value = ProjectNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleProjectANotFoundException(ProjectNotFoundException ex){
-        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-    }
-
-    @ExceptionHandler(value = TaskNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleTaskNotFoundException(TaskNotFoundException ex){
-        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-    }
-    @ExceptionHandler(value = InvalidUsernameOrPasswordException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleLoginFailure(InvalidUsernameOrPasswordException ex){
-        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-    }
-
-    @ExceptionHandler(value = EmployeeNotInProjectException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleInvalidProjectSearch(EmployeeNotInProjectException ex){
-        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    public ErrorResponse handleNotFoundExceptions(Exception ex) {
+        return switch (ex) {
+            case EmployeeNotFoundException e           -> new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage());
+            case ProjectNotFoundException e            -> new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage());
+            case TaskNotFoundException e               -> new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage());
+            case InvalidUsernameOrPasswordException e  -> new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage());
+            case EmployeeNotInProjectException e       -> new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage());
+            default                                    -> new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        };
     }
 }
