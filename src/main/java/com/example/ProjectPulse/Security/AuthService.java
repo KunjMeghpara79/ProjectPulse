@@ -22,8 +22,7 @@ public class AuthService {
 
 
     public String loginValidator(LoginRequestDto loginRequestDto){
-        Employee employee = employeeRepo.findByEmployeeEmail(loginRequestDto.email());
-        if (employee == null) throw new EmployeeNotFoundException("Employee not found!");
+        Employee employee = employeeRepo.findByEmployeeEmail(loginRequestDto.email()).orElseThrow(() -> new EmployeeNotFoundException("Employee not found!"));
 
         if (!passwordEncoder.matches(loginRequestDto.password(), employee.getPassword())) {
             throw new InvalidUsernameOrPasswordException("Invalid User name or password!");

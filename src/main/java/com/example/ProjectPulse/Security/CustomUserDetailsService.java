@@ -20,8 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Employee employee = employeeRepo.findByEmployeeEmail(username);
-        if(employee == null) throw new EmployeeNotFoundException("Employee not found!");
+        Employee employee = employeeRepo.findByEmployeeEmail(username).orElseThrow(() -> new EmployeeNotFoundException("Employee not found!"));
         return org.springframework.security.core.userdetails.User.builder()
                 .username(employee.getEmployeeEmail())
                 .password(employee.getPassword())
@@ -29,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 /*
                 Spring's userdetails class contains authorities so it can contain both roles and permissions
                 so to differentiate these two we have historical convention of adding "ROLE_" before role.
-                spring security will automatically add "ROLE_" while executing role based access enpoints or methods.
+                spring security will automatically add "ROLE_" while executing role based access endpoints or methods.
                 */
                 .build();
     }

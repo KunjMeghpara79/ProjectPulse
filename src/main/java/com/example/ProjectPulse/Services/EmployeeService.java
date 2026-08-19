@@ -39,7 +39,8 @@ public class EmployeeService {
         if (employeeExists) {
             log.error("Employee Already exists!");
             throw new EmployeeAlreadyExistsException("Employee Already exists!");
-        }employee.setPassword(passwordEncoder.encode(employee.getPassword()));
+        }
+        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         employeeRepo.save(employee);
         return employeeMapper.employeeToEmployeeResponseDto(employee);
     }

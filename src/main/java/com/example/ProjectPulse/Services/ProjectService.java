@@ -51,17 +51,6 @@ public class ProjectService {
         this.employeeRepo = employeeRepo;
     }
 
-    public boolean addTask(Project p, Task t){
-        TaskStatus taskStatus = taskService.checkTaskStatus(t);
-        if(taskStatus == TaskStatus.PENDING){
-            List<Task> tasks = p.getTasks();
-            if(taskService.checkTaskFromList(t,p.getTasks())) return false;
-            else {
-                p.getTasks().add(t);
-                return true;
-            }
-        }else return false;
-    }
     @PreAuthorize("hasRole('ADMIN')")
     public ProjectResponseDto createProject(ProjectRequestDto projectRequestDto) {
         if (projectRepo.existsByProjectName(projectRequestDto.projectName())){
@@ -84,10 +73,7 @@ public class ProjectService {
             return projectMapper.projectToProjectResponseDto(project);
         }else {
             String email = SecurityContextHolder.getContext().getAuthentication().getName();
-            Employee employee = employeeRepo.findByEmployeeEmail(email);
-            if (employee == null) {
-                throw new EmployeeNotFoundException("Employee not found!");
-            }
+            Employee employee = employeeRepo.findByEmployeeEmail(email).orElseThrow(() -> new EmployeeNotFoundException("Employee not found!"));
             if(!project.getEmployees().contains(employee)){
                 throw new EmployeeNotInProjectException("You can not access the project information as you are not part of this project");
             }
