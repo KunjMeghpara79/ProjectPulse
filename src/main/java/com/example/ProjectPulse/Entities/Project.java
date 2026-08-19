@@ -1,7 +1,5 @@
-package com.example.ProjectPulse.Project;
+package com.example.ProjectPulse.Entities;
 
-import com.example.ProjectPulse.Employee.Employee;
-import com.example.ProjectPulse.Task.Task;
 import jakarta.persistence.*;
 
 

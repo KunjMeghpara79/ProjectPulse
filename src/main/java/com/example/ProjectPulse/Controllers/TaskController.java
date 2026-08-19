@@ -1,6 +1,10 @@
-package com.example.ProjectPulse.Task;
+package com.example.ProjectPulse.Controllers;
 
 
+import com.example.ProjectPulse.DTOs.TaskRequestDto;
+import com.example.ProjectPulse.DTOs.TaskResponseDto;
+import com.example.ProjectPulse.Entities.Task;
+import com.example.ProjectPulse.Services.TaskService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +26,7 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Task>> getAllTasks(@RequestParam int page,@RequestParam int size){
+    public ResponseEntity<Page<Task>> getAllTasks(@RequestParam int page, @RequestParam int size){
         Page<Task> p = taskService.getTasks(page, size);
         return new ResponseEntity<>(p,HttpStatus.OK);
     }

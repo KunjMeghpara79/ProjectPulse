@@ -1,5 +1,6 @@
-package com.example.ProjectPulse.Task;
+package com.example.ProjectPulse.Repositories;
 
+import com.example.ProjectPulse.Entities.Task;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

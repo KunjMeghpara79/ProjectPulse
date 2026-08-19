@@ -1,7 +1,4 @@
-package com.example.ProjectPulse.Project;
-
-import com.example.ProjectPulse.Employee.EmployeeResponseDto;
-import com.example.ProjectPulse.Task.TaskResponseDto;
+package com.example.ProjectPulse.DTOs;
 
 import java.util.List;
 

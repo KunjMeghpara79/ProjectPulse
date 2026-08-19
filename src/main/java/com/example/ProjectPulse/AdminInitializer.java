@@ -1,8 +1,8 @@
 package com.example.ProjectPulse;
 
-import com.example.ProjectPulse.Employee.Employee;
-import com.example.ProjectPulse.Employee.EmployeeRepo;
-import com.example.ProjectPulse.Employee.EmployeeType;
+import com.example.ProjectPulse.Entities.Employee;
+import com.example.ProjectPulse.Repositories.EmployeeRepo;
+import com.example.ProjectPulse.Enums.EmployeeType;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;

@@ -1,4 +1,4 @@
-package com.example.ProjectPulse.Task;
+package com.example.ProjectPulse.DTOs;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

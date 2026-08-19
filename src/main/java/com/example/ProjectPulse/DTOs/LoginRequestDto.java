@@ -1,4 +1,4 @@
-package com.example.ProjectPulse.Employee;
+package com.example.ProjectPulse.DTOs;
 
 public record LoginRequestDto(String email,String password) {
 }

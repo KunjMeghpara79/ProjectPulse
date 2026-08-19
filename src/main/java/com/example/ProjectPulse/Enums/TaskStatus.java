@@ -1,4 +1,4 @@
-package com.example.ProjectPulse.Task;
+package com.example.ProjectPulse.Enums;
 
 public enum TaskStatus {
     COMPLETED,

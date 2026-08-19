@@ -1,9 +1,11 @@
-package com.example.ProjectPulse.Project;
+package com.example.ProjectPulse.Controllers;
 
+import com.example.ProjectPulse.DTOs.ProjectRequestDto;
+import com.example.ProjectPulse.DTOs.ProjectResponseDto;
+import com.example.ProjectPulse.Services.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/project")

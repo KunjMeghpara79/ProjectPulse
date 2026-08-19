@@ -1,14 +1,11 @@
-package com.example.ProjectPulse.Security;
+package com.example.ProjectPulse.Controllers;
 
-import com.example.ProjectPulse.Employee.Employee;
-import com.example.ProjectPulse.Employee.EmployeeRepo;
-import com.example.ProjectPulse.Employee.LoginRequestDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.ProjectPulse.Repositories.EmployeeRepo;
+import com.example.ProjectPulse.DTOs.LoginRequestDto;
+import com.example.ProjectPulse.Security.AuthService;
+import com.example.ProjectPulse.Security.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

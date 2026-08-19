@@ -1,16 +1,19 @@
 package com.example.ProjectPulse.Security;
 
+import com.example.ProjectPulse.Exceptions.ErrorResponse;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -18,10 +21,12 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final ObjectMapper objectMapper;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService, ObjectMapper objectMapper) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -38,7 +43,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         jwt = authHeader.substring(7);
-        username = jwtService.extractUsername(jwt);
+        try{
+            username = jwtService.extractUsername(jwt);
+        }
+        catch (ExpiredJwtException e){
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json");
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "JWT has expired");
+            objectMapper.writeValue(response.getWriter(),errorResponse);
+            return;
+        }
         if(username != null && SecurityContextHolder.getContext().getAuthentication() ==  null){
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             if (jwtService.validateToken(jwt, userDetails)) {

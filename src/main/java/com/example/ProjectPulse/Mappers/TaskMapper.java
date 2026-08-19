@@ -1,6 +1,9 @@
-package com.example.ProjectPulse.Task;
+package com.example.ProjectPulse.Mappers;
 
 
+import com.example.ProjectPulse.DTOs.TaskRequestDto;
+import com.example.ProjectPulse.DTOs.TaskResponseDto;
+import com.example.ProjectPulse.Entities.Task;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

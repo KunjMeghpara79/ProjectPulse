@@ -1,25 +1,23 @@
-package com.example.ProjectPulse.Project;
+package com.example.ProjectPulse.Services;
 
-import com.example.ProjectPulse.Employee.Employee;
-import com.example.ProjectPulse.Employee.EmployeeRepo;
-import com.example.ProjectPulse.Employee.EmployeeService;
-import com.example.ProjectPulse.Employee.EmployeeType;
+import com.example.ProjectPulse.DTOs.ProjectRequestDto;
+import com.example.ProjectPulse.DTOs.ProjectResponseDto;
+import com.example.ProjectPulse.Entities.Employee;
+import com.example.ProjectPulse.Mappers.ProjectMapper;
+import com.example.ProjectPulse.Repositories.EmployeeRepo;
+import com.example.ProjectPulse.Entities.Project;
 import com.example.ProjectPulse.Exceptions.EmployeeNotFoundException;
 import com.example.ProjectPulse.Exceptions.EmployeeNotInProjectException;
 import com.example.ProjectPulse.Exceptions.ProjectAlreadyExistsException;
 import com.example.ProjectPulse.Exceptions.ProjectNotFoundException;
-import com.example.ProjectPulse.Task.Task;
-import com.example.ProjectPulse.Task.TaskRepo;
-import com.example.ProjectPulse.Task.TaskService;
-import com.example.ProjectPulse.Task.TaskStatus;
+import com.example.ProjectPulse.Entities.Task;
+import com.example.ProjectPulse.Repositories.ProjectRepo;
+import com.example.ProjectPulse.Repositories.TaskRepo;
+import com.example.ProjectPulse.Enums.TaskStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 

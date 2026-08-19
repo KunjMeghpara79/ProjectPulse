@@ -1,7 +1,8 @@
-package com.example.ProjectPulse.Project;
+package com.example.ProjectPulse.Mappers;
 
-import com.example.ProjectPulse.Employee.EmployeeMapper;
-import com.example.ProjectPulse.Task.TaskMapper;
+import com.example.ProjectPulse.DTOs.ProjectRequestDto;
+import com.example.ProjectPulse.DTOs.ProjectResponseDto;
+import com.example.ProjectPulse.Entities.Project;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

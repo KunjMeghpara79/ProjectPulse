@@ -1,4 +1,5 @@
-package com.example.ProjectPulse.Employee;
+package com.example.ProjectPulse.Entities;
+import com.example.ProjectPulse.Enums.EmployeeType;
 import jakarta.persistence.*;
 
 @Entity

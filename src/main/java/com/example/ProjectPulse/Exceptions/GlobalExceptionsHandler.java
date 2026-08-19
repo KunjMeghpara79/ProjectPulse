@@ -38,4 +38,6 @@ public class GlobalExceptionsHandler {
             default                                    -> new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         };
     }
+
+
 }

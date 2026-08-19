@@ -1,6 +1,8 @@
 package com.example.ProjectPulse;
 
-import com.example.ProjectPulse.Employee.*;
+import com.example.ProjectPulse.DTOs.EmployeeRequestDto;
+import com.example.ProjectPulse.Enums.EmployeeType;
+import com.example.ProjectPulse.Services.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +18,7 @@ public class EmployeeCreationTest {
     @Test
     @WithMockUser(roles = "EMPLOYEE")
     void createUserTest(){
-        EmployeeRequestDto employeeRequestDto = new EmployeeRequestDto("Kunj","kunj@gmail.com","password",EmployeeType.EMPLOYEE);
+        EmployeeRequestDto employeeRequestDto = new EmployeeRequestDto("Kunj","kunj@gmail.com","password", EmployeeType.ASSOCIATE);
         employeeService.createEmployee(employeeRequestDto);
     }
 }
