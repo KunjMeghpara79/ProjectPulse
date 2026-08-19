@@ -1,9 +1,9 @@
 package com.example.ProjectPulse.Controllers;
 
 
-import com.example.ProjectPulse.DTOs.TaskRequestDto;
-import com.example.ProjectPulse.DTOs.TaskResponseDto;
-import com.example.ProjectPulse.Entities.Task;
+import com.example.ProjectPulse.Models.DTOs.TaskRequestDto;
+import com.example.ProjectPulse.Models.DTOs.TaskResponseDto;
+import com.example.ProjectPulse.Models.Entities.Task;
 import com.example.ProjectPulse.Services.TaskService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

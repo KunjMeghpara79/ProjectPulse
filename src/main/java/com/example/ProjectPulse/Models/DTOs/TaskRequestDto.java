@@ -1,7 +1,5 @@
-package com.example.ProjectPulse.DTOs;
+package com.example.ProjectPulse.Models.DTOs;
 
-import com.example.ProjectPulse.Entities.Employee;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 public record TaskRequestDto(

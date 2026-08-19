@@ -1,9 +1,8 @@
 package com.example.ProjectPulse.Services;
 
-import com.example.ProjectPulse.DTOs.EmployeeRequestDto;
-import com.example.ProjectPulse.DTOs.EmployeeResponseDto;
-import com.example.ProjectPulse.Entities.Employee;
-import com.example.ProjectPulse.Enums.EmployeeType;
+import com.example.ProjectPulse.Models.DTOs.EmployeeRequestDto;
+import com.example.ProjectPulse.Models.DTOs.EmployeeResponseDto;
+import com.example.ProjectPulse.Models.Entities.Employee;
 import com.example.ProjectPulse.Exceptions.EmployeeAlreadyExistsException;
 import com.example.ProjectPulse.Exceptions.EmployeeNotFoundException;
 import com.example.ProjectPulse.Mappers.EmployeeMapper;
@@ -11,12 +10,9 @@ import com.example.ProjectPulse.Repositories.EmployeeRepo;
 import com.example.ProjectPulse.Repositories.TaskRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import static com.example.ProjectPulse.Enums.EmployeeType.ADMIN;
 
 @Service
 @Slf4j

@@ -1,6 +1,6 @@
 package com.example.ProjectPulse.Controllers;
-import com.example.ProjectPulse.DTOs.EmployeeRequestDto;
-import com.example.ProjectPulse.DTOs.EmployeeResponseDto;
+import com.example.ProjectPulse.Models.DTOs.EmployeeRequestDto;
+import com.example.ProjectPulse.Models.DTOs.EmployeeResponseDto;
 import com.example.ProjectPulse.Services.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

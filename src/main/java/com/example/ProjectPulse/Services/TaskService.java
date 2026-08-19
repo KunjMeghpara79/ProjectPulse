@@ -1,15 +1,13 @@
 package com.example.ProjectPulse.Services;
 
-import com.example.ProjectPulse.DTOs.TaskRequestDto;
-import com.example.ProjectPulse.DTOs.TaskResponseDto;
+import com.example.ProjectPulse.Models.DTOs.TaskRequestDto;
+import com.example.ProjectPulse.Models.DTOs.TaskResponseDto;
 import com.example.ProjectPulse.Enums.TaskStatus;
 import com.example.ProjectPulse.Mappers.TaskMapper;
 import com.example.ProjectPulse.Repositories.EmployeeRepo;
-import com.example.ProjectPulse.Entities.Task;
+import com.example.ProjectPulse.Models.Entities.Task;
 import com.example.ProjectPulse.Exceptions.EmployeeNotFoundException;
-import com.example.ProjectPulse.Exceptions.ProjectNotFoundException;
 import com.example.ProjectPulse.Exceptions.TaskNotFoundException;
-import com.example.ProjectPulse.Entities.Project;
 import com.example.ProjectPulse.Repositories.ProjectRepo;
 import com.example.ProjectPulse.Repositories.TaskRepo;
 import jakarta.transaction.Transactional;

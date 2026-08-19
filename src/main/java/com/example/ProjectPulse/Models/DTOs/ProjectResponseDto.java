@@ -1,4 +1,4 @@
-package com.example.ProjectPulse.DTOs;
+package com.example.ProjectPulse.Models.DTOs;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.example.ProjectPulse.Controllers;
 
 import com.example.ProjectPulse.Repositories.EmployeeRepo;
-import com.example.ProjectPulse.DTOs.LoginRequestDto;
+import com.example.ProjectPulse.Models.DTOs.LoginRequestDto;
 import com.example.ProjectPulse.Security.AuthService;
 import com.example.ProjectPulse.Security.JwtService;
 import org.springframework.http.HttpStatus;

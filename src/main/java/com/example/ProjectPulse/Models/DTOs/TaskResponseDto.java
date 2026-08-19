@@ -1,6 +1,5 @@
-package com.example.ProjectPulse.DTOs;
+package com.example.ProjectPulse.Models.DTOs;
 
-import com.example.ProjectPulse.Entities.Employee;
 import com.example.ProjectPulse.Enums.TaskStatus;
 
 public record TaskResponseDto(int taskId,

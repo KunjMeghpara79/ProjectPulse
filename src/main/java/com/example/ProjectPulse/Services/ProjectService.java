@@ -1,25 +1,21 @@
 package com.example.ProjectPulse.Services;
 
-import com.example.ProjectPulse.DTOs.ProjectRequestDto;
-import com.example.ProjectPulse.DTOs.ProjectResponseDto;
-import com.example.ProjectPulse.Entities.Employee;
+import com.example.ProjectPulse.Models.DTOs.ProjectRequestDto;
+import com.example.ProjectPulse.Models.DTOs.ProjectResponseDto;
+import com.example.ProjectPulse.Models.Entities.Employee;
 import com.example.ProjectPulse.Mappers.ProjectMapper;
 import com.example.ProjectPulse.Repositories.EmployeeRepo;
-import com.example.ProjectPulse.Entities.Project;
+import com.example.ProjectPulse.Models.Entities.Project;
 import com.example.ProjectPulse.Exceptions.EmployeeNotFoundException;
 import com.example.ProjectPulse.Exceptions.EmployeeNotInProjectException;
 import com.example.ProjectPulse.Exceptions.ProjectAlreadyExistsException;
 import com.example.ProjectPulse.Exceptions.ProjectNotFoundException;
-import com.example.ProjectPulse.Entities.Task;
 import com.example.ProjectPulse.Repositories.ProjectRepo;
 import com.example.ProjectPulse.Repositories.TaskRepo;
-import com.example.ProjectPulse.Enums.TaskStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /*
 @Component : A class annotated by this annotation will be automatically registered as spring managed bean

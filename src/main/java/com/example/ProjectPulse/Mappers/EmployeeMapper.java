@@ -1,8 +1,8 @@
 package com.example.ProjectPulse.Mappers;
 
-import com.example.ProjectPulse.DTOs.EmployeeRequestDto;
-import com.example.ProjectPulse.DTOs.EmployeeResponseDto;
-import com.example.ProjectPulse.Entities.Employee;
+import com.example.ProjectPulse.Models.DTOs.EmployeeRequestDto;
+import com.example.ProjectPulse.Models.DTOs.EmployeeResponseDto;
+import com.example.ProjectPulse.Models.Entities.Employee;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

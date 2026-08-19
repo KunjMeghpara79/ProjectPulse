@@ -1,4 +1,4 @@
-package com.example.ProjectPulse.DTOs;
+package com.example.ProjectPulse.Models.DTOs;
 
 import com.example.ProjectPulse.Enums.EmployeeType;
 import jakarta.validation.constraints.Email;

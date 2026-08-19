@@ -1,6 +1,6 @@
 package com.example.ProjectPulse;
 
-import com.example.ProjectPulse.Entities.Employee;
+import com.example.ProjectPulse.Models.Entities.Employee;
 import com.example.ProjectPulse.Repositories.EmployeeRepo;
 import com.example.ProjectPulse.Enums.EmployeeType;
 import jakarta.transaction.Transactional;

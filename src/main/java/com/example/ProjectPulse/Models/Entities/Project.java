@@ -1,4 +1,4 @@
-package com.example.ProjectPulse.Entities;
+package com.example.ProjectPulse.Models.Entities;
 
 import jakarta.persistence.*;
 

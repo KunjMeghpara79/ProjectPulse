@@ -1,8 +1,8 @@
 package com.example.ProjectPulse.Mappers;
 
-import com.example.ProjectPulse.DTOs.ProjectRequestDto;
-import com.example.ProjectPulse.DTOs.ProjectResponseDto;
-import com.example.ProjectPulse.Entities.Project;
+import com.example.ProjectPulse.Models.DTOs.ProjectRequestDto;
+import com.example.ProjectPulse.Models.DTOs.ProjectResponseDto;
+import com.example.ProjectPulse.Models.Entities.Project;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

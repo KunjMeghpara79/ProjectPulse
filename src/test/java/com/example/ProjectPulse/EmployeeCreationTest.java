@@ -1,6 +1,6 @@
 package com.example.ProjectPulse;
 
-import com.example.ProjectPulse.DTOs.EmployeeRequestDto;
+import com.example.ProjectPulse.Models.DTOs.EmployeeRequestDto;
 import com.example.ProjectPulse.Enums.EmployeeType;
 import com.example.ProjectPulse.Services.EmployeeService;
 import org.junit.jupiter.api.Test;

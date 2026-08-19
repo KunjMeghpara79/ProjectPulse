@@ -1,7 +1,7 @@
 package com.example.ProjectPulse.Repositories;
 
 import com.example.ProjectPulse.Enums.EmployeeType;
-import com.example.ProjectPulse.Entities.Employee;
+import com.example.ProjectPulse.Models.Entities.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

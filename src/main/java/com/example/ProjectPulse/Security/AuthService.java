@@ -1,8 +1,8 @@
 package com.example.ProjectPulse.Security;
 
-import com.example.ProjectPulse.Entities.Employee;
+import com.example.ProjectPulse.Models.Entities.Employee;
 import com.example.ProjectPulse.Repositories.EmployeeRepo;
-import com.example.ProjectPulse.DTOs.LoginRequestDto;
+import com.example.ProjectPulse.Models.DTOs.LoginRequestDto;
 import com.example.ProjectPulse.Exceptions.EmployeeNotFoundException;
 import com.example.ProjectPulse.Exceptions.InvalidUsernameOrPasswordException;
 import org.springframework.security.crypto.password.PasswordEncoder;

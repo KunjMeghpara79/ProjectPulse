@@ -1,7 +1,7 @@
 package com.example.ProjectPulse.Controllers;
 
-import com.example.ProjectPulse.DTOs.ProjectRequestDto;
-import com.example.ProjectPulse.DTOs.ProjectResponseDto;
+import com.example.ProjectPulse.Models.DTOs.ProjectRequestDto;
+import com.example.ProjectPulse.Models.DTOs.ProjectResponseDto;
 import com.example.ProjectPulse.Services.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
