@@ -2,10 +2,7 @@ package com.example.ProjectPulse.Entities;
 
 
 import com.example.ProjectPulse.Enums.TaskStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Task {
@@ -19,7 +16,26 @@ public class Task {
     private int taskId;
     private String taskDetails;
     private TaskStatus taskStatus;
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
     private int projectId;
+
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
     private int employeeId;
 
     public String getTaskDetails() {
@@ -28,25 +44,15 @@ public class Task {
     public TaskStatus getTaskStatus() {
         return taskStatus;
     }
-    public int getProjectId() {
-        return projectId;
-    }
-    public int getEmployeeId() {
-        return employeeId;
-    }
 
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
+
+
     public void setTaskStatus(TaskStatus taskStatus) {
         this.taskStatus = taskStatus;
     }
     public void setTaskDetails(String taskDetails) {
         this.taskDetails = taskDetails;
-    }
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
     }
 
 

@@ -2,6 +2,9 @@ package com.example.ProjectPulse.Entities;
 import com.example.ProjectPulse.Enums.EmployeeType;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 public class Employee {
 
@@ -18,6 +21,9 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     private EmployeeType employeeType;
+
+    @ManyToMany(mappedBy = "employees")
+    private Set<Project> projects = new HashSet<>();
 
     public Employee() {
     }

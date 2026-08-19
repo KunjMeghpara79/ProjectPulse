@@ -52,8 +52,6 @@ public class TaskService {
     public TaskResponseDto createTask(TaskRequestDto taskRequestDto){
         boolean employeeExists = employeeRepo.existsById(taskRequestDto.employeeId());
 
-        Project project = projectRepo.findById(taskRequestDto.projectId()).orElseThrow(() -> new ProjectNotFoundException("Project Not found!"));
-
         if(!employeeExists){
             log.error("Employee not found!");
             throw new EmployeeNotFoundException("Project not found !");
@@ -61,7 +59,6 @@ public class TaskService {
         Task task = taskMapper.taskRequestDtoToTask(taskRequestDto);
         task.setTaskStatus(TaskStatus.PENDING);
         taskRepo.save(task);
-        project.getTasks().add(task);
         return taskMapper.taskToTaskResponseDto(task);
     }
 
