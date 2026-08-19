@@ -22,6 +22,8 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private EmployeeType employeeType;
 
+    // mappedBy employees means the relationship is handles in Project class and it contains variable named employee
+
     @ManyToMany(mappedBy = "employees")
     private Set<Project> projects = new HashSet<>();
 

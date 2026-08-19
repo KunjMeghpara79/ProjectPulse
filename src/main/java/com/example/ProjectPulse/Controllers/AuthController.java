@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
 
-    private final PasswordEncoder passwordEncoder;
 
     private final AuthService authService;
 
@@ -25,7 +24,6 @@ public class AuthController {
     private final EmployeeRepo employeeRepo;
     private final JwtService jwtService;
     public AuthController(PasswordEncoder passwordEncoder, AuthService authService, EmployeeRepo employeeRepo, JwtService jwtService) {
-        this.passwordEncoder = passwordEncoder;
         this.authService = authService;
         this.employeeRepo = employeeRepo;
         this.jwtService = jwtService;

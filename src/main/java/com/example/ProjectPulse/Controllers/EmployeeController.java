@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 /*
  *
- * @Controller      -> Use for WEBPAGES. Returns HTML file names (looks for templates).
+ * @Controller      -> Used for WEBPAGES. Returns HTML file names (looks for templates).
  *                     You must manually add @ResponseBody to the method.
  *
  * @RestController  -> Use for APIs. Returns RAW DATA (JSON) automatically.
@@ -37,13 +37,13 @@ public class EmployeeController {
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{employeeId}")
+    @PutMapping("/{employeeId}")
     public ResponseEntity<EmployeeResponseDto> updateEmployeeName(@PathVariable int employeeId,@RequestBody EmployeeRequestDto employeeRequestDto) {
         EmployeeResponseDto employee = employeeService.updateEmployee(employeeId, employeeRequestDto);
         return new ResponseEntity<>(employee,HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{employeeId}")
+    @DeleteMapping("/{employeeId}")
     public ResponseEntity deleteEmployeeById(@PathVariable int employeeId){
         employeeService.deleteEmployeeById(employeeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

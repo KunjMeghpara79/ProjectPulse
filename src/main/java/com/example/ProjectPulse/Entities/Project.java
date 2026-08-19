@@ -25,16 +25,14 @@ public class Project {
     )
     private Set<Employee> employees = new HashSet<>(); // Set prevents query duplicates
 
-    // CORRECT: Keeps its own one-to-many relationship mapping
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> tasks;
+
      /*
       When you fetch a Project object from the database,
       Hibernate will populate projectId and projectName but will put Lazy-Loading Proxies (placeholder objects) in place of the employees
       and task lists. The actual database queries to fetch those lists will not run until you explicitly trigger them.
      */
-
-
 
     public int getProjectId() {
         return projectId;

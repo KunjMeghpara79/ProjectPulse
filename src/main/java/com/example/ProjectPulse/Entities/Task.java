@@ -16,6 +16,7 @@ public class Task {
     private int taskId;
     private String taskDetails;
     private TaskStatus taskStatus;
+    private int projectId;
 
     public int getProjectId() {
         return projectId;
@@ -24,9 +25,6 @@ public class Task {
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
-
-    private int projectId;
-
 
     public int getEmployeeId() {
         return employeeId;
@@ -41,16 +39,15 @@ public class Task {
     public String getTaskDetails() {
         return taskDetails;
     }
+
     public TaskStatus getTaskStatus() {
         return taskStatus;
     }
 
-
-
-
     public void setTaskStatus(TaskStatus taskStatus) {
         this.taskStatus = taskStatus;
     }
+
     public void setTaskDetails(String taskDetails) {
         this.taskDetails = taskDetails;
     }
