@@ -77,7 +77,6 @@ public class ProjectService {
         }
     }
 
-
     @PreAuthorize("hasRole('ADMIN')")
     public ProjectResponseDto addEmployee(int projectId,int employeeId)  {
         Project project = projectRepo.findById(projectId).orElseThrow(() -> {
