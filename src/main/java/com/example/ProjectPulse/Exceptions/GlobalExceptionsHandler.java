@@ -1,9 +1,12 @@
 package com.example.ProjectPulse.Exceptions;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
 public class GlobalExceptionsHandler {
@@ -38,6 +41,25 @@ public class GlobalExceptionsHandler {
             default                                    -> new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         };
     }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class, MethodArgumentTypeMismatchException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleBadinput(Exception ex) {
+        return switch (ex) {
+            case MethodArgumentNotValidException e -> {
+                FieldError fieldError = e.getBindingResult().getFieldError();
+                String targetMessage = (fieldError != null) ? fieldError.getDefaultMessage() : "Validation failed";
+                yield new ErrorResponse(HttpStatus.BAD_REQUEST.value(), targetMessage);
+            }
+            case MethodArgumentTypeMismatchException e -> {
+                String expectedType = (e.getRequiredType() != null) ? e.getRequiredType().getSimpleName() : "unknown";
+                String targetMessage = String.format("The parameter '%s' must be of type '%s'", e.getName(), expectedType);
+                yield new ErrorResponse(HttpStatus.BAD_REQUEST.value(), targetMessage);
+            }
+            default -> new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Invalid input provided");
+        };
+    }
+
 
 
 }

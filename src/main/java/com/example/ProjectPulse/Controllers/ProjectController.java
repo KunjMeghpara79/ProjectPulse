@@ -3,6 +3,7 @@ package com.example.ProjectPulse.Controllers;
 import com.example.ProjectPulse.Models.DTOs.ProjectRequestDto;
 import com.example.ProjectPulse.Models.DTOs.ProjectResponseDto;
 import com.example.ProjectPulse.Services.ProjectService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto projectRequestDto){
+    public ResponseEntity<ProjectResponseDto> createProject(@Valid @RequestBody ProjectRequestDto projectRequestDto){
             ProjectResponseDto projectResponseDto = projectService.createProject(projectRequestDto);
             return new ResponseEntity<>(projectResponseDto, HttpStatus.CREATED);
     }
