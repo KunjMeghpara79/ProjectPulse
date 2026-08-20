@@ -14,8 +14,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import tools.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.security.SignatureException;
 
 import java.io.IOException;
+
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -31,20 +33,38 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String username;
+        try {
+
+
+            final String authHeader = request.getHeader("Authorization");
+            final String jwt;
+            final String username;
         /*
          Bearer is not part of the JWT. It is a standard prefix that tells Spring/server:
          The following value is an access token. Use it for authentication.
          */
-        if(authHeader == null || !authHeader.startsWith("Bearer ")){
-            filterChain.doFilter(request,response);
-            return;
-        }
-        jwt = authHeader.substring(7);
-        try{
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+            jwt = authHeader.substring(7);
+
             username = jwtService.extractUsername(jwt);
+
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                if (jwtService.validateToken(jwt, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            }
+
+            // 6. Pass the request to the next filter in the chain
+            filterChain.doFilter(request, response);
         }
         catch (ExpiredJwtException e){
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -53,20 +73,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             objectMapper.writeValue(response.getWriter(),errorResponse);
             return;
         }
-        if(username != null && SecurityContextHolder.getContext().getAuthentication() ==  null){
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            if (jwtService.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
+        catch (SignatureException e) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json");
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "JWT is tampered");
+            objectMapper.writeValue(response.getWriter(), errorResponse);
+            return;
+        }
+        catch (Exception e){
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json");
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Internal error!");
+            objectMapper.writeValue(response.getWriter(), errorResponse);
+            return;
         }
 
-        // 6. Pass the request to the next filter in the chain
-        filterChain.doFilter(request, response);
-        }
+
+    }
 
 }
